@@ -4,7 +4,7 @@ import PasswordDisplay from "~/components/PasswordDisplay.vue";
 import PasswordOptions from "~/components/PasswordOptions.vue";
 import SecurityStatus from "~/components/SecurityStatus.vue";
 
-const { passwordOptions, generatedPassword, copied, generate, copy } =
+const { passwordOptions, generatedPassword, copied, generateAndCopy } =
 	usePasswordGenerator();
 
 const isRegenerating = ref(false);
@@ -35,7 +35,7 @@ const generateWithAnimation = async () => {
 
 		if (counter > 10) {
 			if (animationInterval.value) clearInterval(animationInterval.value);
-			await generate();
+			await generateAndCopy();
 			setTimeout(() => {
 				displayPassword.value = generatedPassword.value || "";
 				isRegenerating.value = false;
@@ -45,7 +45,7 @@ const generateWithAnimation = async () => {
 };
 
 const regenerateInstantly = async () => {
-	await generate();
+	await generateAndCopy();
 	displayPassword.value = generatedPassword.value || "";
 };
 
@@ -53,11 +53,6 @@ onMounted(() => {
 	regenerateInstantly();
 });
 
-watch(generatedPassword, (newPassword) => {
-	if (!isRegenerating.value) {
-		displayPassword.value = newPassword || "";
-	}
-});
 
 watch(
 	() => [
@@ -97,8 +92,7 @@ watch(
 							:display-password="displayPassword"
 							:copied="copied"
 							:is-regenerating="isRegenerating"
-							@copy="copy"
-							@regenerate="generateWithAnimation"
+							@generateAndCopy="generateWithAnimation"
 						/>
 						<SecurityStatus />
 					</div>

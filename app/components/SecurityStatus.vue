@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePasswordOptionsStore } from "~/stores/password";
 
-const { securityLevelColor, securityLevelText, securityLevelWidth } =
+const { securityLevelColor, securityLevelText, securityLevelWidth, securityLevelBackgroundColor } =
 	useSecurity();
 const passwordOptions = usePasswordOptionsStore();
 </script>
@@ -71,7 +71,7 @@ const passwordOptions = usePasswordOptionsStore();
 				<div class="w-full bg-gray-700 rounded-full h-2.5">
 					<div
 						class="h-2.5 rounded-full transition-all duration-300"
-						:class="securityLevelColor"
+						:class="securityLevelBackgroundColor"
 						:style="{ width: `${securityLevelWidth}%` }"
 					>
 					</div>

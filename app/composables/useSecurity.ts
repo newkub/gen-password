@@ -41,15 +41,30 @@ export const useSecurity = () => {
 	const securityLevelColor = computed(() => {
 		switch (securityLevel.value) {
 			case "veryStrong":
-				return "bg-green-500 text-green-200";
+				return "text-green-400";
 			case "strong":
-				return "bg-blue-500 text-blue-200";
+				return "text-blue-400";
 			case "medium":
-				return "bg-yellow-500 text-yellow-200";
+				return "text-yellow-400";
 			case "weak":
-				return "bg-orange-500 text-orange-200";
+				return "text-orange-400";
 			default:
-				return "bg-red-500 text-red-200";
+				return "text-red-400";
+		}
+	});
+
+	const securityLevelBackgroundColor = computed(() => {
+		switch (securityLevel.value) {
+			case "veryStrong":
+				return "bg-green-500";
+			case "strong":
+				return "bg-blue-500";
+			case "medium":
+				return "bg-yellow-500";
+			case "weak":
+				return "bg-orange-500";
+			default:
+				return "bg-red-500";
 		}
 	});
 
@@ -72,6 +87,7 @@ export const useSecurity = () => {
 		securityLevel,
 		securityLevelText,
 		securityLevelColor,
+		securityLevelBackgroundColor,
 		securityLevelWidth,
 	};
 };

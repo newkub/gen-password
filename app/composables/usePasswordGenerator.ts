@@ -2,8 +2,32 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
 import { usePasswordOptionsStore } from "~/stores/password";
-import type { GeneratePasswordResponse } from "~/types/password";
+import type { PasswordOptions } from "~/types/password";
 
+const CHARACTER_SETS = {
+	uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+	lowercase: "abcdefghijklmnopqrstuvwxyz",
+	numbers: "0123456789",
+	symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
+} as const;
+
+const generatePassword = (options: PasswordOptions): string => {
+	let validChars = "";
+	if (options.includeUppercase) validChars += CHARACTER_SETS.uppercase;
+	if (options.includeLowercase) validChars += CHARACTER_SETS.lowercase;
+	if (options.includeNumbers) validChars += CHARACTER_SETS.numbers;
+	if (options.includeSymbols) validChars += CHARACTER_SETS.symbols;
+
+	if (!validChars) {
+		throw new Error("Please select at least one character type");
+	}
+
+	let password = "";
+	for (let i = 0; i < options.length; i++) {
+		password += validChars.charAt(Math.floor(Math.random() * validChars.length));
+	}
+	return password;
+};
 
 const copyToClipboard = async (text: string): Promise<boolean> => {
 	try {
@@ -23,26 +47,18 @@ export const usePasswordGenerator = () => {
 	const copied = ref(false);
 	const error = ref("");
 
-	const generate = async () => {
+	const generateAndCopy = async () => {
 		try {
 			error.value = "";
-			const response = await $fetch<GeneratePasswordResponse>("/api/generate-password", {
-				method: "POST",
-				body: passwordOptionsStore.$state,
-			});
-			generatedPassword.value = response.password;
-			copied.value = false;
+			const newPassword = generatePassword(passwordOptionsStore.$state);
+			generatedPassword.value = newPassword;
+			const success = await copyToClipboard(newPassword);
+			if (success) {
+				copied.value = true;
+				setTimeout(() => (copied.value = false), 2000);
+			}
 		} catch (err) {
-			error.value = err instanceof Error ? err.message : "Failed to generate password";
-		}
-	};
-
-	const copy = async () => {
-		if (!generatedPassword.value) return;
-		const success = await copyToClipboard(generatedPassword.value);
-		if (success) {
-			copied.value = true;
-			setTimeout(() => (copied.value = false), 2000);
+			error.value = err instanceof Error ? err.message : "Failed to generate and copy password";
 		}
 	};
 
@@ -58,8 +74,7 @@ export const usePasswordGenerator = () => {
 		generatedPassword,
 		copied,
 		error,
-		generate,
-		copy,
+		generateAndCopy,
 		reset,
 	};
 };

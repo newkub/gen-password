@@ -5,7 +5,7 @@ const props = defineProps<{
 	isRegenerating: boolean;
 }>();
 
-const emit = defineEmits(["copy", "regenerate"]);
+const emit = defineEmits(["generateAndCopy"]);
 </script>
 
 <template>
@@ -20,29 +20,24 @@ const emit = defineEmits(["copy", "regenerate"]);
 					{{ displayPassword || "..." }}
 				</p>
 			</div>
-			<div class="flex flex-col sm:flex-row gap-3">
-				<button
-					@click="emit('copy')"
-					class="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 w-full cursor-pointer"
-				>
-					<Icon v-if="copied" name="mdi:check-circle" class="text-xl" />
-					<Icon v-else name="mdi:content-copy" class="text-xl" />
-					<span>{{ copied ? "Copied!" : "Copy Password" }}</span>
-				</button>
-				<button
-					@click="emit('regenerate')"
-					:disabled="isRegenerating"
-					class="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 w-full sm:w-auto disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
-				>
-					<Icon
-						v-if="isRegenerating"
-						name="mdi:loading"
-						class="animate-spin text-xl"
-					/>
-					<Icon v-else name="mdi:refresh" class="text-xl" />
-					<span>{{ isRegenerating ? "Generating..." : "Regenerate" }}</span>
-				</button>
-			</div>
+			<button
+				@click="emit('generateAndCopy')"
+				:disabled="isRegenerating"
+				class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer transform hover:scale-105"
+			>
+				<Icon
+					v-if="isRegenerating"
+					name="mdi:loading"
+					class="animate-spin text-2xl"
+				/>
+				<Icon
+					v-else-if="copied"
+					name="mdi:check-circle"
+					class="text-2xl text-green-300"
+				/>
+				<Icon v-else name="mdi:flash" class="text-2xl" />
+				<span class="text-lg">{{ isRegenerating ? "Generating..." : (copied ? "Copied!" : "Generate & Copy") }}</span>
+			</button>
 		</div>
 	</div>
 </template>
