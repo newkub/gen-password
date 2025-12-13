@@ -24,7 +24,9 @@ const generatePassword = (options: PasswordOptions): string => {
 
 	let password = "";
 	for (let i = 0; i < options.length; i++) {
-		password += validChars.charAt(Math.floor(Math.random() * validChars.length));
+		password += validChars.charAt(
+			Math.floor(Math.random() * validChars.length),
+		);
 	}
 	return password;
 };
@@ -58,7 +60,10 @@ export const usePasswordGenerator = () => {
 				setTimeout(() => (copied.value = false), 2000);
 			}
 		} catch (err) {
-			error.value = err instanceof Error ? err.message : "Failed to generate and copy password";
+			error.value =
+				err instanceof Error
+					? err.message
+					: "Failed to generate and copy password";
 		}
 	};
 

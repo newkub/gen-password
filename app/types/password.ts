@@ -6,7 +6,12 @@ export interface PasswordOptions {
 	includeSymbols: boolean;
 }
 
-export type SecurityLevel = "veryWeak" | "weak" | "medium" | "strong" | "veryStrong";
+export type SecurityLevel =
+	| "veryWeak"
+	| "weak"
+	| "medium"
+	| "strong"
+	| "veryStrong";
 
 export interface GeneratePasswordResponse {
 	password: string;

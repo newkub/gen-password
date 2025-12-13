@@ -13,8 +13,8 @@ const animationInterval = ref<number | null>(null);
 
 const generateWithAnimation = async () => {
 	isRegenerating.value = true;
-	const previousPassword = displayPassword.value || generatedPassword.value
-		|| "";
+	const previousPassword =
+		displayPassword.value || generatedPassword.value || "";
 	let counter = 0;
 	const characters =
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
@@ -23,8 +23,8 @@ const generateWithAnimation = async () => {
 
 	animationInterval.value = window.setInterval(async () => {
 		let tempPassword = "";
-		const length = previousPassword.length || passwordOptions.length.value
-			|| 12;
+		const length =
+			previousPassword.length || passwordOptions.length.value || 12;
 		for (let i = 0; i < length; i++) {
 			tempPassword += characters.charAt(
 				Math.floor(Math.random() * characters.length),
