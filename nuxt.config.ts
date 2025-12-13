@@ -10,39 +10,39 @@ export default defineNuxtConfig({
 		"@nuxt/icon",
 		"@vueuse/nuxt",
 		"@nuxtjs/color-mode",
-		"@vue-macros/nuxt"
+		"@vue-macros/nuxt",
 	],
 	colorMode: {
 		classSuffix: "",
 		preference: "dark",
 		fallback: "dark",
 	},
-    nitro : {
-        preset: "cloudflare_module",
-        cloudflare: {
-            deployConfig: true,
-            nodeCompat: true
-        },
-    },
-    icon: {
-        serverBundle: {
-            collections: ['mdi'] 
-            }
-        },
+	nitro: {
+		preset: "cloudflare_module",
+		cloudflare: {
+			deployConfig: true,
+			nodeCompat: true,
+		},
+	},
+	icon: {
+		serverBundle: {
+			collections: ["mdi"],
+		},
+	},
 	typescript: {
 		typeCheck: true,
 		strict: true,
 	},
-	vite : {
-		 plugins: [
-            checker({
-                overlay: {
-                    initialIsOpen: false,
-                },
-                typescript: true,
-                vueTsc: true,
-                oxlint: true,
-            }),
-        ],
-	}
+	vite: {
+		plugins: [
+			checker({
+				overlay: {
+					initialIsOpen: false,
+				},
+				typescript: true,
+				vueTsc: true,
+				oxlint: true,
+			}),
+		],
+	},
 });

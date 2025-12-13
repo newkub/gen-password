@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import PasswordOptions from '~/components/PasswordOptions.vue'
-import PasswordDisplay from '~/components/PasswordDisplay.vue'
-import SecurityStatus from '~/components/SecurityStatus.vue'
+import PasswordDisplay from "~/components/PasswordDisplay.vue";
+import PasswordOptions from "~/components/PasswordOptions.vue";
+import SecurityStatus from "~/components/SecurityStatus.vue";
 
 const { passwordOptions, generatedPassword, copied, generate, copy } =
 	usePasswordGenerator();

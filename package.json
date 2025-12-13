@@ -1,25 +1,36 @@
 {
-  "name": "nuxt-app",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "lint": "biome lint --write",
-    "format": "biome format --write",
-    "lint:format": "biome lint format --write",
-    "lefthook": "bunx lefthook install"
-  },
-  "dependencies": {
-    "nuxt": "^4.1.2",
-    "vue": "^3.5.21"
-  },
-  "devDependencies": {
-    "@iconify-json/mdi": "^1.2.3",
-    "@unocss/nuxt": "^66.5.1",
-    "unocss": "^66.5.1"
-  }
+	"name": "gen-password",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"lint": "nuxt typecheck && oxlint --fix",
+		"format": "dprint fmt",
+		"prepare": "lefthook install"
+	},
+	"dependencies": {
+		"nuxt": "^4.2.2",
+		"vue": "^3.5.25"
+	},
+	"devDependencies": {
+		"@nuxt/icon": "^2.1.0",
+		"@nuxtjs/color-mode": "^4.0.0",
+		"@pinia/nuxt": "^0.11.3",
+		"@unocss/nuxt": "^66.5.10",
+		"@vue-macros/nuxt": "^3.1.1",
+		"@vueuse/nuxt": "^14.1.0",
+		"dprint": "^0.50.2",
+		"lefthook": "^2.0.11",
+		"nuxt-mcp-dev": "^0.3.1",
+		"oxlint": "^1.32.0",
+		"oxlint-tsgolint": "^0.8.6",
+		"typescript": "^5.9.3",
+		"unocss": "^66.5.10",
+		"vite-plugin-checker": "^0.12.0",
+		"vue-tsc": "^3.1.8"
+	}
 }
