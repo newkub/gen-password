@@ -1,33 +1,9 @@
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
-import { usePasswordOptionsStore } from '~/stores/password';
-import type { PasswordOptions } from "~/types/password";
+import { usePasswordOptionsStore } from "~/stores/password";
+import type { GeneratePasswordResponse } from "~/types/password";
 
-const CHARACTER_SETS = {
-	uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-	lowercase: "abcdefghijklmnopqrstuvwxyz",
-	numbers: "0123456789",
-	symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
-} as const;
-
-const generatePassword = (options: PasswordOptions): string => {
-	let validChars = "";
-	if (options.includeUppercase) validChars += CHARACTER_SETS.uppercase;
-	if (options.includeLowercase) validChars += CHARACTER_SETS.lowercase;
-	if (options.includeNumbers) validChars += CHARACTER_SETS.numbers;
-	if (options.includeSymbols) validChars += CHARACTER_SETS.symbols;
-
-	if (!validChars) {
-		throw new Error("Please select at least one character type");
-	}
-
-	let password = "";
-	for (let i = 0; i < options.length; i++) {
-		password += validChars.charAt(Math.floor(Math.random() * validChars.length));
-	}
-	return password;
-};
 
 const copyToClipboard = async (text: string): Promise<boolean> => {
 	try {
@@ -47,10 +23,14 @@ export const usePasswordGenerator = () => {
 	const copied = ref(false);
 	const error = ref("");
 
-	const generate = () => {
+	const generate = async () => {
 		try {
 			error.value = "";
-			generatedPassword.value = generatePassword(passwordOptionsStore.$state);
+			const response = await $fetch<GeneratePasswordResponse>("/api/generate-password", {
+				method: "POST",
+				body: passwordOptionsStore.$state,
+			});
+			generatedPassword.value = response.password;
 			copied.value = false;
 		} catch (err) {
 			error.value = err instanceof Error ? err.message : "Failed to generate password";

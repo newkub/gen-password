@@ -11,7 +11,7 @@ const isRegenerating = ref(false);
 const displayPassword = ref("");
 const animationInterval = ref<number | null>(null);
 
-const generateWithAnimation = () => {
+const generateWithAnimation = async () => {
 	isRegenerating.value = true;
 	const previousPassword = displayPassword.value || generatedPassword.value
 		|| "";
@@ -21,7 +21,7 @@ const generateWithAnimation = () => {
 
 	if (animationInterval.value) clearInterval(animationInterval.value);
 
-	animationInterval.value = window.setInterval(() => {
+	animationInterval.value = window.setInterval(async () => {
 		let tempPassword = "";
 		const length = previousPassword.length || passwordOptions.length.value
 			|| 12;
@@ -35,7 +35,7 @@ const generateWithAnimation = () => {
 
 		if (counter > 10) {
 			if (animationInterval.value) clearInterval(animationInterval.value);
-			generate();
+			await generate();
 			setTimeout(() => {
 				displayPassword.value = generatedPassword.value || "";
 				isRegenerating.value = false;
@@ -44,8 +44,8 @@ const generateWithAnimation = () => {
 	}, 30);
 };
 
-const regenerateInstantly = () => {
-	generate();
+const regenerateInstantly = async () => {
+	await generate();
 	displayPassword.value = generatedPassword.value || "";
 };
 
@@ -75,19 +75,24 @@ watch(
 </script>
 
 <template>
-	<div class="min-h-screen flex items-center justify-center p-4">
-		<div class="w-full max-w-6xl bg-white rounded-xl shadow-lg overflow-hidden">
-			<div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-5 text-center">
-				<h1 class="text-2xl font-bold text-white">Password Generator</h1>
-				<p class="text-blue-100 text-sm mt-1">
-					Create strong and secure passwords
+	<div class="min-h-screen flex items-center justify-center p-4 bg-gray-900 text-white">
+		<div class="w-full max-w-4xl bg-gray-800/50 rounded-2xl shadow-lg overflow-hidden border border-gray-700">
+			<div class="p-6 text-center">
+				<div class="flex items-center justify-center gap-3">
+					<Icon name="mdi:shield-lock" class="text-4xl text-blue-400" />
+					<h1 class="text-3xl font-bold">Password Generator</h1>
+				</div>
+				<p class="text-gray-400 text-sm mt-2">
+					Create strong, secure, and random passwords
 				</p>
 			</div>
 
 			<div class="p-5 max-h-[85vh] overflow-y-auto">
-				<div class="flex flex-col gap-6">
-					<PasswordOptions />
-					<div class="w-full flex flex-col gap-6">
+				<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+					<div class="lg:col-span-3">
+						<PasswordOptions />
+					</div>
+					<div class="lg:col-span-2 flex flex-col gap-6">
 						<PasswordDisplay
 							:display-password="displayPassword"
 							:copied="copied"
