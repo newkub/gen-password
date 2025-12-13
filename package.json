@@ -10,7 +10,8 @@
 		"postinstall": "nuxt prepare",
 		"lint": "nuxt typecheck && oxlint --fix",
 		"format": "dprint fmt",
-		"prepare": "lefthook install"
+		"prepare": "lefthook install",
+		"deploy": "wrangler --cwd .output deploy"
 	},
 	"dependencies": {
 		"nuxt": "^4.2.2",
