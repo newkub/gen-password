@@ -1,11 +1,48 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import checker from "vite-plugin-checker";
+
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: false },
-
-  modules: [
-    '@unocss/nuxt'
-  ],
-
-  css: ['@unocss/reset/tailwind-compat.css']
-})
+	compatibilityDate: "2025-05-15",
+	devtools: { enabled: true },
+	modules: [
+		"nuxt-mcp-dev",
+		"@pinia/nuxt",
+		"@unocss/nuxt",
+		"@nuxt/icon",
+		"@vueuse/nuxt",
+		"@nuxtjs/color-mode",
+		"@vue-macros/nuxt"
+	],
+	colorMode: {
+		classSuffix: "",
+		preference: "dark",
+		fallback: "dark",
+	},
+    nitro : {
+        preset: "cloudflare_module",
+        cloudflare: {
+            deployConfig: true,
+            nodeCompat: true
+        },
+    },
+    icon: {
+        serverBundle: {
+            collections: ['mdi'] 
+            }
+        },
+	typescript: {
+		typeCheck: true,
+		strict: true,
+	},
+	vite : {
+		 plugins: [
+            checker({
+                overlay: {
+                    initialIsOpen: false,
+                },
+                typescript: true,
+                vueTsc: true,
+                oxlint: true,
+            }),
+        ],
+	}
+});
