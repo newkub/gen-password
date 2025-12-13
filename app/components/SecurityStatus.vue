@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { usePasswordOptionsStore } from "~/stores/password";
 
-const { securityLevelColor, securityLevelText, securityLevelWidth, securityLevelBackgroundColor } =
-	useSecurity();
+const {
+	securityLevelColor,
+	securityLevelText,
+	securityLevelWidth,
+	securityLevelBackgroundColor,
+} = useSecurity();
 const passwordOptions = usePasswordOptionsStore();
 </script>
 

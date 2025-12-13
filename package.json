@@ -8,8 +8,8 @@
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
-		"lint": "nuxt typecheck && oxlint --fix",
-		"format": "dprint fmt",
+		"lint": "nuxt typecheck && biome lint --write",
+		"format": "biome fotmat",
 		"prepare": "lefthook install"
 	},
 	"dependencies": {

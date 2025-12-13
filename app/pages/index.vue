@@ -53,7 +53,6 @@ onMounted(() => {
 	regenerateInstantly();
 });
 
-
 watch(
 	() => [
 		passwordOptions.length.value,

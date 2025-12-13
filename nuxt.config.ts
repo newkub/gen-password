@@ -16,6 +16,9 @@ export default defineNuxtConfig({
 		fallback: "dark",
 	},
 	nitro: {
+		prerender: {
+			autoSubfolderIndex: false,
+		},
 		preset: "cloudflare_module",
 		cloudflare: {
 			deployConfig: true,

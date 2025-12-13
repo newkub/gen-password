@@ -36,7 +36,11 @@ const emit = defineEmits(["generateAndCopy"]);
 					class="text-2xl text-green-300"
 				/>
 				<Icon v-else name="mdi:flash" class="text-2xl" />
-				<span class="text-lg">{{ isRegenerating ? "Generating..." : (copied ? "Copied!" : "Generate & Copy") }}</span>
+				<span class="text-lg">{{
+					isRegenerating
+					? "Generating..."
+					: (copied ? "Copied!" : "Generate & Copy")
+				}}</span>
 			</button>
 		</div>
 	</div>
