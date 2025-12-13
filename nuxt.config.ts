@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 		fallback: "dark",
 	},
 	nitro: {
-		preset: "cloudflare_module",
+		preset: "cloudflare-pages",
 		cloudflare: {
 			deployConfig: true,
 			nodeCompat: true,
