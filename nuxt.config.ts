@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-	compatibilityDate: "2025-05-15",
+	compatibilityDate: "latest",
 	devtools: { enabled: true },
 	modules: [
 		"nuxt-mcp-dev",
