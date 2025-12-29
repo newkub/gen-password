@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { usePasswordOptionsStore } from "~/stores/password";
 
 const { generatedPassword, copied, generateAndCopy } = usePasswordGenerator();
@@ -9,18 +9,28 @@ const isRegenerating = ref(false);
 const displayPassword = ref("");
 const animationInterval = ref<number | null>(null);
 
+const imageSeed = ref(`${Date.now()}`);
+const imageUrl = computed(
+	() => `https://picsum.photos/seed/${imageSeed.value}/1280/720`,
+);
+
 const generateWithAnimation = async () => {
+	imageSeed.value = `${Date.now()}-${Math.random()}`;
 	isRegenerating.value = true;
 	const previousPassword =
 		displayPassword.value || generatedPassword.value || "";
 	let counter = 0;
 	let characters = "";
-	if (passwordOptionsStore.includeUppercase) characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	if (passwordOptionsStore.includeLowercase) characters += "abcdefghijklmnopqrstuvwxyz";
+	if (passwordOptionsStore.includeUppercase)
+		characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	if (passwordOptionsStore.includeLowercase)
+		characters += "abcdefghijklmnopqrstuvwxyz";
 	if (passwordOptionsStore.includeNumbers) characters += "0123456789";
-	if (passwordOptionsStore.includeSymbols) characters += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+	if (passwordOptionsStore.includeSymbols)
+		characters += "!@#$%^&*()_+-=[]{}|;:,.<>?";
 	if (!characters) {
-		characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		characters =
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	}
 
 	if (animationInterval.value) clearInterval(animationInterval.value);
@@ -65,6 +75,7 @@ watch(
 
 void copied;
 void generateWithAnimation;
+void imageUrl;
 </script>
 
 <template>
@@ -85,14 +96,24 @@ void generateWithAnimation;
 					<div class="lg:col-span-3">
 						<PasswordOptions />
 					</div>
-					<div class="lg:col-span-2 flex flex-col gap-6">
+					<div class="lg:col-span-2 flex flex-col gap-6 h-full">
+						<div class="overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-950/40">
+							<div class="w-full aspect-video">
+								<img
+									:src="imageUrl"
+									alt="Random image"
+									class="w-full h-full object-cover"
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+						</div>
 						<PasswordDisplay
 							:display-password="displayPassword"
 							:copied="copied"
 							:is-regenerating="isRegenerating"
 							@generateAndCopy="generateWithAnimation"
 						/>
-						<SecurityStatus />
 					</div>
 				</div>
 			</div>
