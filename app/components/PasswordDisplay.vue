@@ -5,7 +5,7 @@ const props = defineProps<{
 	isRegenerating: boolean;
 }>();
 
-const emit = defineEmits(["generateAndCopy"]);
+const emit = defineEmits(["generateAndCopy", "copy"]);
 
 void props;
 void emit;
@@ -18,10 +18,22 @@ void emit;
 			<h2 class="text-xl font-bold text-white">Generated Password</h2>
 		</div>
 		<div>
-			<div class="bg-zinc-900/80 border-2 border-dashed border-zinc-700/70 rounded-lg p-3 mb-4 min-h-[52px] flex items-center justify-center">
+			<div
+				class="group relative bg-zinc-900/80 border-2 border-dashed border-zinc-700/70 rounded-lg p-3 mb-4 min-h-[52px] flex items-center justify-center transition-colors"
+				:class="displayPassword && !isRegenerating
+					? 'cursor-pointer hover:border-blue-500/70'
+					: 'cursor-default'"
+				@click="displayPassword && !isRegenerating && emit('copy')"
+			>
 				<p class="text-xl font-mono break-all text-zinc-200 text-center">
 					{{ displayPassword || "..." }}
 				</p>
+				<div
+					v-if="displayPassword && !isRegenerating"
+					class="absolute inset-x-0 bottom-1 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+				>
+					<span class="text-[11px] text-zinc-400">Click to copy</span>
+				</div>
 			</div>
 			<button
 				@click="emit('generateAndCopy')"
@@ -41,8 +53,10 @@ void emit;
 				<Icon v-else name="mdi:flash" class="text-2xl" />
 				<span class="text-lg">{{
 					isRegenerating
-					? "Generating..."
-					: (copied ? "Copied!" : "Generate & Copy")
+						? "Generating..."
+						: (copied
+							? "Copied!"
+							: (displayPassword ? "Regenerate & Copy" : "Generate & Copy"))
 				}}</span>
 			</button>
 		</div>

@@ -56,21 +56,42 @@ export const usePasswordGenerator = () => {
 	const copied = ref(false);
 	const error = ref("");
 
-	const generateAndCopy = async () => {
+	const generate = () => {
 		try {
 			error.value = "";
+			copied.value = false;
 			const newPassword = generatePassword(
 				passwordOptionsStore.$state,
 				minLength,
 			);
 			generatedPassword.value = newPassword;
-			const success = await copyToClipboard(newPassword);
-			if (success) {
-				copied.value = true;
-				setTimeout(() => {
-					copied.value = false;
-				}, 2000);
-			}
+			return newPassword;
+		} catch (err) {
+			error.value =
+				err instanceof Error
+					? err.message
+					: "Failed to generate password";
+			return "";
+		}
+	};
+
+	const copy = async (text: string) => {
+		if (!text) return false;
+		const success = await copyToClipboard(text);
+		if (success) {
+			copied.value = true;
+			setTimeout(() => {
+				copied.value = false;
+			}, 2000);
+		}
+		return success;
+	};
+
+	const generateAndCopy = async () => {
+		try {
+			error.value = "";
+			const newPassword = generate();
+			await copy(newPassword);
 		} catch (err) {
 			error.value =
 				err instanceof Error
@@ -91,6 +112,8 @@ export const usePasswordGenerator = () => {
 		generatedPassword,
 		copied,
 		error,
+		generate,
+		copy,
 		generateAndCopy,
 		reset,
 	};

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { usePasswordOptionsStore } from "~/stores/password";
 
-const { generatedPassword, copied, generateAndCopy } = usePasswordGenerator();
+const { generatedPassword, copied, copy, generate, generateAndCopy } =
+	usePasswordGenerator();
 const passwordOptionsStore = usePasswordOptionsStore();
 
 const isRegenerating = ref(false);
@@ -13,6 +14,15 @@ const imageSeed = ref(`${Date.now()}`);
 const imageUrl = computed(
 	() => `https://picsum.photos/seed/${imageSeed.value}/1280/720`,
 );
+
+onMounted(() => {
+	const initial = generate();
+	if (initial) displayPassword.value = initial;
+});
+
+const handleCopy = async () => {
+	await copy(displayPassword.value || generatedPassword.value || "");
+};
 
 const generateWithAnimation = async () => {
 	imageSeed.value = `${Date.now()}-${Math.random()}`;
@@ -74,6 +84,7 @@ watch(
 );
 
 void copied;
+void handleCopy;
 void generateWithAnimation;
 void imageUrl;
 </script>
@@ -92,16 +103,17 @@ void imageUrl;
 			</div>
 
 			<div class="p-5">
-				<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+				<div class="grid grid-cols-1 lg:grid-cols-6 gap-6">
 					<div class="lg:col-span-4">
 						<PasswordOptions />
 					</div>
-					<div class="lg:col-span-1 flex flex-col gap-6 h-full">
+					<div class="lg:col-span-2 flex flex-col gap-6 h-full">
 						<PasswordDisplay
 							:display-password="displayPassword"
 							:copied="copied"
 							:is-regenerating="isRegenerating"
 							@generateAndCopy="generateWithAnimation"
+							@copy="handleCopy"
 						/>
 						<div class="overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-950/40">
 							<div class="w-full aspect-video">
