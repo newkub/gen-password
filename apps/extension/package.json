@@ -10,13 +10,16 @@
 		"zip": "wxt zip",
 		"zip:firefox": "wxt zip -b firefox",
 		"prepare": "wxt prepare",
-		"lint": "echo \"no lint\"",
-		"format": "echo \"no format\"",
-		"test": "echo \"no tests\"",
-		"verify": "bun run build"
+		"format": "biome format --write .",
+		"lint": "biome lint --write .",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"test": "bun run typecheck",
+		"verify": "bun run test && bun run build"
 	},
 	"devDependencies": {
-		"wxt": "^0.10.4",
-		"typescript": "^5.9.3"
+		"@biomejs/biome": "^2.3.10",
+		"@types/chrome": "^0.1.32",
+		"typescript": "^5.9.3",
+		"wxt": "^0.20.13"
 	}
 }

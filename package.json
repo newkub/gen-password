@@ -1,16 +1,17 @@
 {
-  "name": "@newkub/gen-password",
+  "name": "@gen-password/root",
   "private": true,
   "type": "module",
   "packageManager": "bun@1.3.5",
   "globalConcurrency": 32,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
     "start": "turbo watch verify",
     "postinstall": "taze -r -w -i",
-    "prepare": "lefthook install",
+    "prepare": "bunx lefthook install",
     "dev": "turbo dev --ui=tui",
     "format": "turbo format",
     "scan": "sg scan -r",
@@ -22,15 +23,16 @@
     "clean": "bunx rimraf */bun.lockb */node_modules"
   },
   "devDependencies": {
-    "turbo": "^2.7.2",
     "lefthook": "^2.0.13",
-    "taze": "^19.7.0",
-    "node-modules-inspector": "^0.4.1",
-    "rimraf": "^6.0.1"
+    "node-modules-inspector": "^1.2.0",
+    "rimraf": "^6.1.2",
+    "taze": "^19.9.2",
+    "turbo": "^2.7.2"
   },
   "trustedDependencies": [
     "@gen-password/extension",
     "@gen-password/web",
+    "@gen-password/ui",
     "@parcel/watcher",
     "spawn-sync"
   ]
