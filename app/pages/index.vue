@@ -93,10 +93,10 @@ void imageUrl;
 
 			<div class="p-5">
 				<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-					<div class="lg:col-span-3">
+					<div class="lg:col-span-4">
 						<PasswordOptions />
 					</div>
-					<div class="lg:col-span-2 flex flex-col gap-6 h-full">
+					<div class="lg:col-span-1 flex flex-col gap-6 h-full">
 						<PasswordDisplay
 							:display-password="displayPassword"
 							:copied="copied"
