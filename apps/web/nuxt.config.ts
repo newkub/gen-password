@@ -1,5 +1,3 @@
-import checker from "vite-plugin-checker";
-
 export default defineNuxtConfig({
 	compatibilityDate: "latest",
 	ssr: false,
@@ -26,17 +24,5 @@ export default defineNuxtConfig({
 	typescript: {
 		typeCheck: false,
 		strict: true,
-	},
-	vite: {
-		plugins: [
-			checker({
-				overlay: {
-					initialIsOpen: false,
-				},
-				typescript: true,
-				vueTsc: true,
-				oxlint: true,
-			}),
-		],
 	},
 });

@@ -1,0 +1,22 @@
+{
+	"name": "@gen-password/extension",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "wxt",
+		"dev:firefox": "wxt -b firefox",
+		"build": "wxt build",
+		"build:firefox": "wxt build -b firefox",
+		"zip": "wxt zip",
+		"zip:firefox": "wxt zip -b firefox",
+		"prepare": "wxt prepare",
+		"lint": "echo \"no lint\"",
+		"format": "echo \"no format\"",
+		"test": "echo \"no tests\"",
+		"verify": "bun run build"
+	},
+	"devDependencies": {
+		"wxt": "^0.10.4",
+		"typescript": "^5.9.3"
+	}
+}

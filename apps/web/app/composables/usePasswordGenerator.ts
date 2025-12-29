@@ -68,9 +68,7 @@ export const usePasswordGenerator = () => {
 			return newPassword;
 		} catch (err) {
 			error.value =
-				err instanceof Error
-					? err.message
-					: "Failed to generate password";
+				err instanceof Error ? err.message : "Failed to generate password";
 			return "";
 		}
 	};

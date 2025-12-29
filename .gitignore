@@ -6,6 +6,13 @@
 .cache
 dist
 
+# WXT outputs
+.wxt
+web-ext.config.ts
+
+# Turborepo
+.turbo
+
 # Node dependencies
 node_modules
 
