@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { usePasswordOptionsStore } from "~/stores/password";
 
 const { generatedPassword, copied, generateAndCopy } = usePasswordGenerator();
@@ -14,8 +14,14 @@ const generateWithAnimation = async () => {
 	const previousPassword =
 		displayPassword.value || generatedPassword.value || "";
 	let counter = 0;
-	const characters =
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+	let characters = "";
+	if (passwordOptionsStore.includeUppercase) characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	if (passwordOptionsStore.includeLowercase) characters += "abcdefghijklmnopqrstuvwxyz";
+	if (passwordOptionsStore.includeNumbers) characters += "0123456789";
+	if (passwordOptionsStore.includeSymbols) characters += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+	if (!characters) {
+		characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	}
 
 	if (animationInterval.value) clearInterval(animationInterval.value);
 
@@ -41,13 +47,29 @@ const generateWithAnimation = async () => {
 	}, 30);
 };
 
+watch(
+	() => [
+		passwordOptionsStore.length,
+		passwordOptionsStore.includeUppercase,
+		passwordOptionsStore.includeLowercase,
+		passwordOptionsStore.includeNumbers,
+		passwordOptionsStore.includeSymbols,
+	],
+	() => {
+		displayPassword.value = "";
+		isRegenerating.value = false;
+		if (animationInterval.value) clearInterval(animationInterval.value);
+		animationInterval.value = null;
+	},
+);
+
 void copied;
 void generateWithAnimation;
 </script>
 
 <template>
-	<div class="min-h-screen flex items-center justify-center p-0 text-zinc-100">
-		<div class="w-11/12 md:w-3/4 bg-transparent rounded-2xl shadow-lg overflow-hidden border border-zinc-800/80">
+	<div class="h-full flex items-center justify-center p-0 text-zinc-100">
+		<div class="w-11/12 md:w-3/4 h-full max-h-full bg-transparent rounded-2xl shadow-lg overflow-hidden border border-zinc-800/80">
 			<div class="p-6 text-center">
 				<div class="flex items-center justify-center gap-3">
 					<Icon name="mdi:shield-lock" class="text-4xl text-blue-400" />
@@ -58,7 +80,7 @@ void generateWithAnimation;
 				</p>
 			</div>
 
-			<div class="p-5 max-h-[85vh] overflow-y-auto">
+			<div class="p-5">
 				<div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
 					<div class="lg:col-span-3">
 						<PasswordOptions />
