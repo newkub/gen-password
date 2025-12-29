@@ -71,6 +71,21 @@ export const useSecurity = () => {
 		}
 	});
 
+	const securityLevelGlow = computed(() => {
+		switch (securityLevel.value) {
+			case "veryStrong":
+				return "shadow-[0_0_18px_rgba(52,211,153,0.35)]";
+			case "strong":
+				return "shadow-[0_0_18px_rgba(56,189,248,0.35)]";
+			case "medium":
+				return "shadow-[0_0_18px_rgba(251,191,36,0.30)]";
+			case "weak":
+				return "shadow-[0_0_18px_rgba(251,146,60,0.30)]";
+			default:
+				return "shadow-[0_0_18px_rgba(251,113,133,0.30)]";
+		}
+	});
+
 	const securityLevelWidth = computed(() => {
 		switch (securityLevel.value) {
 			case "veryStrong":
@@ -91,6 +106,7 @@ export const useSecurity = () => {
 		securityLevelText,
 		securityLevelColor,
 		securityLevelBackgroundColor,
+		securityLevelGlow,
 		securityLevelWidth,
 	};
 };

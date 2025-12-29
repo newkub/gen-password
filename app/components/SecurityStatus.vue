@@ -6,6 +6,7 @@ const {
 	securityLevelText,
 	securityLevelWidth,
 	securityLevelBackgroundColor,
+	securityLevelGlow,
 } = useSecurity();
 const passwordOptions = usePasswordOptionsStore();
 
@@ -13,6 +14,7 @@ void securityLevelColor;
 void securityLevelText;
 void securityLevelWidth;
 void securityLevelBackgroundColor;
+void securityLevelGlow;
 void passwordOptions;
 </script>
 
@@ -80,8 +82,8 @@ void passwordOptions;
 				</div>
 				<div class="w-full bg-zinc-950/60 rounded-full h-3 border border-zinc-800 overflow-hidden">
 					<div
-						class="h-3 rounded-full transition-all duration-300 shadow-[0_0_12px_rgba(59,130,246,0.25)]"
-						:class="securityLevelBackgroundColor"
+						class="h-3 rounded-full transition-all duration-300"
+						:class="[securityLevelBackgroundColor, securityLevelGlow]"
 						:style="{ width: `${securityLevelWidth}%` }"
 					>
 					</div>
