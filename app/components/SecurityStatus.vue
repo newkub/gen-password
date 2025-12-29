@@ -78,9 +78,9 @@ void passwordOptions;
 						{{ securityLevelText }}
 					</span>
 				</div>
-				<div class="w-full bg-zinc-700 rounded-full h-2.5">
+				<div class="w-full bg-zinc-950/60 rounded-full h-3 border border-zinc-800 overflow-hidden">
 					<div
-						class="h-2.5 rounded-full transition-all duration-300"
+						class="h-3 rounded-full transition-all duration-300 shadow-[0_0_12px_rgba(59,130,246,0.25)]"
 						:class="securityLevelBackgroundColor"
 						:style="{ width: `${securityLevelWidth}%` }"
 					>

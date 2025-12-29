@@ -59,7 +59,10 @@ export const usePasswordGenerator = () => {
 	const generateAndCopy = async () => {
 		try {
 			error.value = "";
-			const newPassword = generatePassword(passwordOptionsStore.$state, minLength);
+			const newPassword = generatePassword(
+				passwordOptionsStore.$state,
+				minLength,
+			);
 			generatedPassword.value = newPassword;
 			const success = await copyToClipboard(newPassword);
 			if (success) {
@@ -69,9 +72,10 @@ export const usePasswordGenerator = () => {
 				}, 2000);
 			}
 		} catch (err) {
-			error.value = err instanceof Error
-				? err.message
-				: "Failed to generate and copy password";
+			error.value =
+				err instanceof Error
+					? err.message
+					: "Failed to generate and copy password";
 		}
 	};
 

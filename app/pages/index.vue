@@ -5,15 +5,14 @@ import { usePasswordOptionsStore } from "~/stores/password";
 const { generatedPassword, copied, generateAndCopy } = usePasswordGenerator();
 const passwordOptionsStore = usePasswordOptionsStore();
 
-
 const isRegenerating = ref(false);
 const displayPassword = ref("");
 const animationInterval = ref<number | null>(null);
 
 const generateWithAnimation = async () => {
 	isRegenerating.value = true;
-	const previousPassword = displayPassword.value || generatedPassword.value
-		|| "";
+	const previousPassword =
+		displayPassword.value || generatedPassword.value || "";
 	let counter = 0;
 	const characters =
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
@@ -22,8 +21,7 @@ const generateWithAnimation = async () => {
 
 	animationInterval.value = window.setInterval(async () => {
 		let tempPassword = "";
-		const length = previousPassword.length || passwordOptionsStore.length
-			|| 12;
+		const length = previousPassword.length || passwordOptionsStore.length || 12;
 		for (let i = 0; i < length; i++) {
 			tempPassword += characters.charAt(
 				Math.floor(Math.random() * characters.length),
@@ -48,8 +46,8 @@ void generateWithAnimation;
 </script>
 
 <template>
-	<div class="min-h-screen flex items-center justify-center p-4 bg-zinc-900 text-zinc-100">
-		<div class="w-full max-w-4xl bg-zinc-800/40 rounded-2xl shadow-lg overflow-hidden border border-zinc-700/70">
+	<div class="min-h-screen flex items-center justify-center p-4 bg-zinc-950 text-zinc-100">
+		<div class="w-full max-w-none bg-zinc-900/70 rounded-2xl shadow-lg overflow-hidden border border-zinc-800">
 			<div class="p-6 text-center">
 				<div class="flex items-center justify-center gap-3">
 					<Icon name="mdi:shield-lock" class="text-4xl text-blue-400" />
