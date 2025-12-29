@@ -2,7 +2,13 @@ import checker from "vite-plugin-checker";
 
 export default defineNuxtConfig({
 	compatibilityDate: "latest",
+	ssr: false,
 	devtools: { enabled: true },
+	runtimeConfig: {
+		public: {
+			passwordMinLength: 16,
+		},
+	},
 	modules: [
 		"nuxt-mcp-dev",
 		"@pinia/nuxt",
@@ -12,29 +18,6 @@ export default defineNuxtConfig({
 		"@nuxtjs/color-mode",
 		"@vue-macros/nuxt",
 	],
-	colorMode: {
-		classSuffix: "",
-		preference: "dark",
-		fallback: "dark",
-	},
-	nitro: {
-		prerender: {
-			autoSubfolderIndex: false,
-		},
-		preset: "cloudflare_module",
-		cloudflare: {
-			deployConfig: true,
-			nodeCompat: true,
-			wrangler: {
-				routes: [
-					{
-						pattern: "gen-password.wrikka.com",
-						custom_domain: true,
-					},
-				],
-			},
-		},
-	},
 	icon: {
 		serverBundle: {
 			collections: ["mdi"],

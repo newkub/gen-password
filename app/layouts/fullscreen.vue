@@ -2,7 +2,7 @@
 </script>
 
 <template>
-	<div class="h-screen w-screen overflow-hidden flex items-center justify-center p-4 bg-gray-900 text-white">
+	<div class="h-screen w-screen overflow-hidden flex items-center justify-center p-4 bg-zinc-900 text-zinc-100">
 		<main class="w-full flex-1 flex flex-col justify-center">
 			<slot />
 		</main>

@@ -11,7 +11,10 @@ const CHARACTER_SETS = {
 	symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?",
 } as const;
 
-const generatePassword = (options: PasswordOptions): string => {
+const generatePassword = (
+	options: PasswordOptions,
+	minLength: number,
+): string => {
 	let validChars = "";
 	if (options.includeUppercase) validChars += CHARACTER_SETS.uppercase;
 	if (options.includeLowercase) validChars += CHARACTER_SETS.lowercase;
@@ -22,8 +25,9 @@ const generatePassword = (options: PasswordOptions): string => {
 		throw new Error("Please select at least one character type");
 	}
 
+	const length = Math.max(options.length, minLength);
 	let password = "";
-	for (let i = 0; i < options.length; i++) {
+	for (let i = 0; i < length; i++) {
 		password += validChars.charAt(
 			Math.floor(Math.random() * validChars.length),
 		);
@@ -42,6 +46,9 @@ const copyToClipboard = async (text: string): Promise<boolean> => {
 };
 
 export const usePasswordGenerator = () => {
+	const config = useRuntimeConfig();
+	const minLength = Number(config.public.passwordMinLength) || 16;
+
 	const passwordOptionsStore = usePasswordOptionsStore();
 	const { ...passwordOptions } = storeToRefs(passwordOptionsStore);
 
@@ -52,7 +59,7 @@ export const usePasswordGenerator = () => {
 	const generateAndCopy = async () => {
 		try {
 			error.value = "";
-			const newPassword = generatePassword(passwordOptionsStore.$state);
+			const newPassword = generatePassword(passwordOptionsStore.$state, minLength);
 			generatedPassword.value = newPassword;
 			const success = await copyToClipboard(newPassword);
 			if (success) {

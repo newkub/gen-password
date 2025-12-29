@@ -4,6 +4,9 @@ import { usePasswordOptionsStore } from "~/stores/password";
 import type { SecurityLevel } from "~/types/password";
 
 export const useSecurity = () => {
+	const config = useRuntimeConfig();
+	const minLength = Number(config.public.passwordMinLength) || 16;
+
 	const passwordOptions = usePasswordOptionsStore();
 
 	const securityLevel = computed<SecurityLevel>(() => {
@@ -16,7 +19,7 @@ export const useSecurity = () => {
 
 		const length = passwordOptions.length;
 
-		if (selectedTypes === 4 && length >= 16) return "veryStrong";
+		if (selectedTypes === 4 && length >= minLength) return "veryStrong";
 		if (selectedTypes === 4 && length >= 12) return "strong";
 		if (selectedTypes >= 3 && length >= 10) return "medium";
 		if (selectedTypes >= 2 && length >= 8) return "weak";
@@ -56,15 +59,15 @@ export const useSecurity = () => {
 	const securityLevelBackgroundColor = computed(() => {
 		switch (securityLevel.value) {
 			case "veryStrong":
-				return "bg-green-500";
+				return "bg-gradient-to-r from-emerald-500 to-green-400";
 			case "strong":
-				return "bg-blue-500";
+				return "bg-gradient-to-r from-sky-500 to-blue-500";
 			case "medium":
-				return "bg-yellow-500";
+				return "bg-gradient-to-r from-amber-400 to-yellow-400";
 			case "weak":
-				return "bg-orange-500";
+				return "bg-gradient-to-r from-orange-500 to-amber-500";
 			default:
-				return "bg-red-500";
+				return "bg-gradient-to-r from-rose-600 to-red-500";
 		}
 	});
 

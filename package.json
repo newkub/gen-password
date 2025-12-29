@@ -11,28 +11,28 @@
 		"postinstall": "nuxt prepare",
 		"lint": "nuxt typecheck && biome lint --write",
 		"format": "biome format --write",
-		"prepare": "lefthook install"
+		"prepare": "bunx lefthook install"
 	},
 	"dependencies": {
 		"nuxt": "^4.2.2",
-		"vue": "^3.5.25"
+		"vue": "^3.5.26"
 	},
 	"devDependencies": {
 		"@iconify-json/mdi": "^1.2.3",
-		"@nuxt/icon": "^2.1.0",
+		"@nuxt/icon": "^2.1.1",
 		"@nuxtjs/color-mode": "^4.0.0",
 		"@pinia/nuxt": "^0.11.3",
-		"@unocss/nuxt": "^66.5.10",
+		"@unocss/nuxt": "^66.5.11",
 		"@vue-macros/nuxt": "^3.1.1",
 		"@vueuse/nuxt": "^14.1.0",
-		"dprint": "^0.50.2",
-		"lefthook": "^2.0.11",
+		"dprint": "^0.51.1",
+		"lefthook": "^2.0.13",
 		"nuxt-mcp-dev": "^0.3.1",
-		"oxlint": "^1.32.0",
-		"oxlint-tsgolint": "^0.8.6",
+		"oxlint": "^1.36.0",
+		"oxlint-tsgolint": "^0.10.0",
 		"typescript": "^5.9.3",
-		"unocss": "^66.5.10",
+		"unocss": "^66.5.11",
 		"vite-plugin-checker": "^0.12.0",
-		"vue-tsc": "^3.1.8"
+		"vue-tsc": "^3.2.1"
 	}
 }

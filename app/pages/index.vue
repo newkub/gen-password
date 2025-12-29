@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
-import PasswordDisplay from "~/components/PasswordDisplay.vue";
+import { ref } from "vue";
+import { usePasswordOptionsStore } from "~/stores/password";
 
-const { passwordOptions, generatedPassword, copied, generateAndCopy } =
-	usePasswordGenerator();
+const { generatedPassword, copied, generateAndCopy } = usePasswordGenerator();
+const passwordOptionsStore = usePasswordOptionsStore();
 
 
 const isRegenerating = ref(false);
@@ -22,7 +22,7 @@ const generateWithAnimation = async () => {
 
 	animationInterval.value = window.setInterval(async () => {
 		let tempPassword = "";
-		const length = previousPassword.length || passwordOptions.length.value
+		const length = previousPassword.length || passwordOptionsStore.length
 			|| 12;
 		for (let i = 0; i < length; i++) {
 			tempPassword += characters.charAt(
@@ -43,41 +43,19 @@ const generateWithAnimation = async () => {
 	}, 30);
 };
 
+void copied;
 void generateWithAnimation;
-
-const regenerateInstantly = async () => {
-	await generateAndCopy();
-	displayPassword.value = generatedPassword.value || "";
-};
-
-onMounted(() => {
-	regenerateInstantly();
-});
-
-watch(
-	() => [
-		passwordOptions.length.value,
-		passwordOptions.includeUppercase.value,
-		passwordOptions.includeLowercase.value,
-		passwordOptions.includeNumbers.value,
-		passwordOptions.includeSymbols.value,
-	],
-	() => {
-		regenerateInstantly();
-	},
-	{ deep: true },
-);
 </script>
 
 <template>
-	<div class="min-h-screen flex items-center justify-center p-4 bg-gray-900 text-white">
-		<div class="w-full max-w-4xl bg-gray-800/50 rounded-2xl shadow-lg overflow-hidden border border-gray-700">
+	<div class="min-h-screen flex items-center justify-center p-4 bg-zinc-900 text-zinc-100">
+		<div class="w-full max-w-4xl bg-zinc-800/40 rounded-2xl shadow-lg overflow-hidden border border-zinc-700/70">
 			<div class="p-6 text-center">
 				<div class="flex items-center justify-center gap-3">
 					<Icon name="mdi:shield-lock" class="text-4xl text-blue-400" />
 					<h1 class="text-3xl font-bold">Password Generator</h1>
 				</div>
-				<p class="text-gray-400 text-sm mt-2">
+				<p class="text-zinc-300 text-sm mt-2">
 					Create strong, secure, and random passwords
 				</p>
 			</div>

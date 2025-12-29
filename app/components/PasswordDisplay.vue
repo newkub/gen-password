@@ -6,17 +6,20 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["generateAndCopy"]);
+
+void props;
+void emit;
 </script>
 
 <template>
-	<div class="w-full bg-gray-800/50 rounded-lg p-5 border border-gray-700">
+	<div class="w-full bg-zinc-800/40 rounded-lg p-5 border border-zinc-700/70">
 		<div class="flex items-center gap-3 mb-5">
 			<Icon name="mdi:form-textbox-password" class="text-2xl text-blue-400" />
 			<h2 class="text-xl font-bold text-white">Generated Password</h2>
 		</div>
 		<div>
-			<div class="bg-gray-900 border-2 border-dashed border-gray-700 rounded-lg p-4 mb-4 min-h-[64px] flex items-center justify-center">
-				<p class="text-xl font-mono break-all text-gray-300 text-center">
+			<div class="bg-zinc-900/80 border-2 border-dashed border-zinc-700/70 rounded-lg p-4 mb-4 min-h-[64px] flex items-center justify-center">
+				<p class="text-xl font-mono break-all text-zinc-200 text-center">
 					{{ displayPassword || "..." }}
 				</p>
 			</div>
