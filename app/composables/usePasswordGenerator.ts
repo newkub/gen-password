@@ -57,13 +57,14 @@ export const usePasswordGenerator = () => {
 			const success = await copyToClipboard(newPassword);
 			if (success) {
 				copied.value = true;
-				setTimeout(() => (copied.value = false), 2000);
+				setTimeout(() => {
+					copied.value = false;
+				}, 2000);
 			}
 		} catch (err) {
-			error.value =
-				err instanceof Error
-					? err.message
-					: "Failed to generate and copy password";
+			error.value = err instanceof Error
+				? err.message
+				: "Failed to generate and copy password";
 		}
 	};
 

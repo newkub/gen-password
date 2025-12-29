@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
 import PasswordDisplay from "~/components/PasswordDisplay.vue";
-import PasswordOptions from "~/components/PasswordOptions.vue";
-import SecurityStatus from "~/components/SecurityStatus.vue";
 
 const { passwordOptions, generatedPassword, copied, generateAndCopy } =
 	usePasswordGenerator();
+
 
 const isRegenerating = ref(false);
 const displayPassword = ref("");
@@ -13,8 +12,8 @@ const animationInterval = ref<number | null>(null);
 
 const generateWithAnimation = async () => {
 	isRegenerating.value = true;
-	const previousPassword =
-		displayPassword.value || generatedPassword.value || "";
+	const previousPassword = displayPassword.value || generatedPassword.value
+		|| "";
 	let counter = 0;
 	const characters =
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
@@ -23,8 +22,8 @@ const generateWithAnimation = async () => {
 
 	animationInterval.value = window.setInterval(async () => {
 		let tempPassword = "";
-		const length =
-			previousPassword.length || passwordOptions.length.value || 12;
+		const length = previousPassword.length || passwordOptions.length.value
+			|| 12;
 		for (let i = 0; i < length; i++) {
 			tempPassword += characters.charAt(
 				Math.floor(Math.random() * characters.length),
@@ -43,6 +42,8 @@ const generateWithAnimation = async () => {
 		}
 	}, 30);
 };
+
+void generateWithAnimation;
 
 const regenerateInstantly = async () => {
 	await generateAndCopy();

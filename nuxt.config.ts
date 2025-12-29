@@ -1,3 +1,5 @@
+import checker from "vite-plugin-checker";
+
 export default defineNuxtConfig({
 	compatibilityDate: "latest",
 	devtools: { enabled: true },
@@ -23,6 +25,14 @@ export default defineNuxtConfig({
 		cloudflare: {
 			deployConfig: true,
 			nodeCompat: true,
+			wrangler: {
+				routes: [
+					{
+						pattern: "gen-password.wrikka.com",
+						custom_domain: true,
+					},
+				],
+			},
 		},
 	},
 	icon: {
@@ -35,6 +45,15 @@ export default defineNuxtConfig({
 		strict: true,
 	},
 	vite: {
-		plugins: [],
+		plugins: [
+			checker({
+				overlay: {
+					initialIsOpen: false,
+				},
+				typescript: true,
+				vueTsc: true,
+				oxlint: true,
+			}),
+		],
 	},
 });
