@@ -46,8 +46,8 @@ void generateWithAnimation;
 </script>
 
 <template>
-	<div class="min-h-screen flex items-center justify-center p-4 bg-zinc-950 text-zinc-100">
-		<div class="w-full max-w-none bg-zinc-900/70 rounded-2xl shadow-lg overflow-hidden border border-zinc-800">
+	<div class="min-h-screen flex items-center justify-center p-0 text-zinc-100">
+		<div class="w-full max-w-none bg-transparent rounded-2xl shadow-lg overflow-hidden border border-zinc-800/80">
 			<div class="p-6 text-center">
 				<div class="flex items-center justify-center gap-3">
 					<Icon name="mdi:shield-lock" class="text-4xl text-blue-400" />

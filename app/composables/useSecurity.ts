@@ -44,30 +44,30 @@ export const useSecurity = () => {
 	const securityLevelColor = computed(() => {
 		switch (securityLevel.value) {
 			case "veryStrong":
-				return "text-green-400";
+				return "text-emerald-400";
 			case "strong":
-				return "text-blue-400";
+				return "text-sky-400";
 			case "medium":
-				return "text-yellow-400";
+				return "text-amber-300";
 			case "weak":
 				return "text-orange-400";
 			default:
-				return "text-red-400";
+				return "text-rose-400";
 		}
 	});
 
 	const securityLevelBackgroundColor = computed(() => {
 		switch (securityLevel.value) {
 			case "veryStrong":
-				return "bg-gradient-to-r from-emerald-500 to-green-400";
+				return "bg-gradient-to-r from-emerald-500 via-green-400 to-lime-300";
 			case "strong":
-				return "bg-gradient-to-r from-sky-500 to-blue-500";
+				return "bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-500";
 			case "medium":
-				return "bg-gradient-to-r from-amber-400 to-yellow-400";
+				return "bg-gradient-to-r from-amber-400 via-yellow-400 to-lime-300";
 			case "weak":
-				return "bg-gradient-to-r from-orange-500 to-amber-500";
+				return "bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-400";
 			default:
-				return "bg-gradient-to-r from-rose-600 to-red-500";
+				return "bg-gradient-to-r from-rose-600 via-red-500 to-orange-500";
 		}
 	});
 

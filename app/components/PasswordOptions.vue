@@ -44,7 +44,7 @@ void lengthModel;
 					type="range"
 					:min="minPasswordLength"
 					max="50"
-					class="w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+					class="w-full h-3 bg-zinc-700 rounded-full appearance-none cursor-pointer accent-blue-500"
 				/>
 				<div class="flex justify-between text-sm text-zinc-500">
 					<span>0</span>
