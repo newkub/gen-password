@@ -79,8 +79,8 @@ void imageUrl;
 </script>
 
 <template>
-	<div class="h-full flex items-center justify-center p-0 text-zinc-100">
-		<div class="w-11/12 md:w-3/4 h-full max-h-full bg-transparent rounded-2xl shadow-lg overflow-hidden border border-zinc-800/80">
+	<div class="min-h-full flex items-center justify-center p-0 text-zinc-100">
+		<div class="w-11/12 md:w-3/4 max-h-full bg-transparent rounded-2xl shadow-lg overflow-y-auto border border-zinc-800/80">
 			<div class="p-6 text-center">
 				<div class="flex items-center justify-center gap-3">
 					<Icon name="mdi:shield-lock" class="text-4xl text-blue-400" />
@@ -97,6 +97,12 @@ void imageUrl;
 						<PasswordOptions />
 					</div>
 					<div class="lg:col-span-2 flex flex-col gap-6 h-full">
+						<PasswordDisplay
+							:display-password="displayPassword"
+							:copied="copied"
+							:is-regenerating="isRegenerating"
+							@generateAndCopy="generateWithAnimation"
+						/>
 						<div class="overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-950/40">
 							<div class="w-full aspect-video">
 								<img
@@ -107,13 +113,10 @@ void imageUrl;
 									decoding="async"
 								/>
 							</div>
+							<div class="px-3 py-2 text-xs text-zinc-400 border-t border-zinc-800/80">
+								sponsored by xxx
+							</div>
 						</div>
-						<PasswordDisplay
-							:display-password="displayPassword"
-							:copied="copied"
-							:is-regenerating="isRegenerating"
-							@generateAndCopy="generateWithAnimation"
-						/>
 					</div>
 				</div>
 			</div>

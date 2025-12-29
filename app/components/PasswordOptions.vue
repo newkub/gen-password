@@ -32,17 +32,19 @@ void lengthModel;
 			<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
 				<label class="text-base font-semibold text-zinc-200"
 				>Password Length</label>
-				<span
-					class="text-lg font-bold text-blue-400 bg-zinc-900/80 px-4 py-1.5 rounded-md border border-zinc-700/70"
-				>
-					{{ passwordOptions.length }}
-				</span>
+				<input
+					v-model.number="lengthModel"
+					type="number"
+					:min="minPasswordLength"
+					max="50"
+					class="w-24 text-lg font-bold text-blue-400 bg-zinc-900/80 px-3 py-1.5 rounded-md border border-zinc-700/70 text-center"
+				/>
 			</div>
 			<div class="space-y-3">
 				<input
 					v-model.number="lengthModel"
 					type="range"
-					:min="minPasswordLength"
+					:min="0"
 					max="50"
 					class="w-full h-3 bg-zinc-700 rounded-full appearance-none cursor-pointer accent-blue-500"
 				/>

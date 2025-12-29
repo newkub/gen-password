@@ -2,8 +2,8 @@
 </script>
 
 <template>
-	<div class="h-screen w-full box-border overflow-hidden flex items-center justify-center p-6 bg-zinc-950 text-zinc-100">
-		<main class="w-full h-full flex flex-col justify-center">
+	<div class="h-screen w-full box-border overflow-y-auto flex items-center justify-center p-6 bg-zinc-950 text-zinc-100">
+		<main class="w-full h-full flex flex-col justify-center overflow-y-auto">
 			<slot />
 		</main>
 	</div>
