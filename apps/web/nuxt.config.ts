@@ -2,11 +2,6 @@ export default defineNuxtConfig({
 	compatibilityDate: "latest",
 	ssr: false,
 	devtools: { enabled: true },
-	runtimeConfig: {
-		public: {
-			passwordMinLength: 16,
-		},
-	},
 	modules: [
 		"nuxt-mcp-dev",
 		"@pinia/nuxt",
