@@ -21,18 +21,10 @@ export default defineNuxtConfig({
 		strict: true,
 	},
 	nitro: {
-		preset: "cloudflare-pages",
+		preset: "cloudflare_pages",
 		cloudflare: {
-            deployConfig: true,
-            nodeCompat: true,
-            wrangler: {
-				routes: [
-					{
-						pattern: "gen-password.wrikka.com",
-						custom_domain: true,
-					},
-				],
-			},
-        },
+			deployConfig: true,
+			nodeCompat: true,
+		},
 	},
 });

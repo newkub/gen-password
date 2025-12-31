@@ -3,3 +3,6 @@
 .nuxt
 node_modules
 dist
+
+# Cloudflare Wrangler
+.wrangler/

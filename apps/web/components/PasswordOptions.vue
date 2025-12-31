@@ -66,7 +66,8 @@ void lengthModel;
 			</p>
 			<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 				<button
-					@click="passwordOptions.includeUppercase.value = !passwordOptions.includeUppercase.value"
+					@click="passwordOptions.includeUppercase.value = !passwordOptions
+					.includeUppercase.value"
 					class="p-3 rounded-lg border transition-all duration-200 text-left flex items-center cursor-pointer"
 					:class="passwordOptions.includeUppercase.value
 					? 'bg-blue-500/20 border-blue-500 text-white'
@@ -79,7 +80,8 @@ void lengthModel;
 					</div>
 				</button>
 				<button
-					@click="passwordOptions.includeLowercase.value = !passwordOptions.includeLowercase.value"
+					@click="passwordOptions.includeLowercase.value = !passwordOptions
+					.includeLowercase.value"
 					class="p-3 rounded-lg border transition-all duration-200 text-left flex items-center cursor-pointer"
 					:class="passwordOptions.includeLowercase.value
 					? 'bg-blue-500/20 border-blue-500 text-white'
@@ -92,7 +94,8 @@ void lengthModel;
 					</div>
 				</button>
 				<button
-					@click="passwordOptions.includeNumbers.value = !passwordOptions.includeNumbers.value"
+					@click="passwordOptions.includeNumbers.value = !passwordOptions
+					.includeNumbers.value"
 					class="p-3 rounded-lg border transition-all duration-200 text-left flex items-center cursor-pointer"
 					:class="passwordOptions.includeNumbers.value
 					? 'bg-blue-500/20 border-blue-500 text-white'
@@ -105,7 +108,8 @@ void lengthModel;
 					</div>
 				</button>
 				<button
-					@click="passwordOptions.includeSymbols.value = !passwordOptions.includeSymbols.value"
+					@click="passwordOptions.includeSymbols.value = !passwordOptions
+					.includeSymbols.value"
 					class="p-3 rounded-lg border transition-all duration-200 text-left flex items-center cursor-pointer"
 					:class="passwordOptions.includeSymbols.value
 					? 'bg-blue-500/20 border-blue-500 text-white'

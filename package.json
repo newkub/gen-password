@@ -9,7 +9,6 @@
   ],
   "scripts": {
     "watch": "turbo watch verify",
-    "postinstall": "taze -r -w -i",
     "prepare": "bunx lefthook install",
     "dev": "turbo dev --ui=tui",
     "format": "turbo format",

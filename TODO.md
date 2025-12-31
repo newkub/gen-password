@@ -1,1 +1,0 @@
-ไม่ใช่ packages/eslint ลบออก 

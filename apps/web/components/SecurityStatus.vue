@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useSecurity } from "../app/composables/useSecurity";
 import { usePasswordOptions } from "~/composables/usePasswordOptions";
+import { useSecurity } from "../app/composables/useSecurity";
 
 const {
 	securityLevelColor,
