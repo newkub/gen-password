@@ -21,6 +21,18 @@ export default defineNuxtConfig({
 		strict: true,
 	},
 	nitro: {
-		preset: "static",
+		preset: "cloudflare-pages",
+		cloudflare: {
+            deployConfig: true,
+            nodeCompat: true,
+            wrangler: {
+				routes: [
+					{
+						pattern: "gen-password.wrikka.com",
+						custom_domain: true,
+					},
+				],
+			},
+        },
 	},
 });
