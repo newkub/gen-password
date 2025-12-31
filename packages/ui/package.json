@@ -8,7 +8,7 @@
   },
   "main": "./index.ts",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.vue"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
