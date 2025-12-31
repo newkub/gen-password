@@ -23,6 +23,7 @@
     "clean": "bunx rimraf */bun.lockb */node_modules"
   },
   "devDependencies": {
+    "eslint": "^8.57.1",
     "lefthook": "^2.0.13",
     "node-modules-inspector": "^1.2.0",
     "rimraf": "^6.1.2",
