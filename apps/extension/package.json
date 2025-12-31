@@ -10,15 +10,17 @@
 		"zip": "wxt zip",
 		"zip:firefox": "wxt zip -b firefox",
 		"prepare": "wxt prepare",
-		"format": "biome format --write .",
-		"lint": "biome lint --write .",
+		"format": "dprint fmt",
+		"lint": "oxlint --fix --type-aware",
 		"typecheck": "tsc -p tsconfig.json --noEmit",
 		"test": "bun run typecheck",
-		"verify": "bun run test && bun run build"
+		"verify": "bun run format && bun run lint && bun run test && bun run build"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.10",
 		"@types/chrome": "^0.1.32",
+		"dprint": "^0.51.1",
+		"oxlint": "^1.36.0",
+		"oxlint-tsgolint": "^0.10.0",
 		"typescript": "^5.9.3",
 		"wxt": "^0.20.13"
 	}
