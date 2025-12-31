@@ -1,57 +1,60 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import { usePasswordOptionsStore } from "~/stores/password";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 
-const { generatedPassword, copied, copy, generate, generateAndCopy } =
-	usePasswordGenerator();
-const passwordOptionsStore = usePasswordOptionsStore();
-
+const length = ref(16);
 const isRegenerating = ref(false);
 const displayPassword = ref("");
+const copied = ref(false);
 const animationInterval = ref<number | null>(null);
 
-const imageSeed = ref(`${Date.now()}`);
-const imageUrl = computed(
-	() => `https://picsum.photos/seed/${imageSeed.value}/1280/720`,
-);
+const CHARACTER_SET =
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
 
-onMounted(() => {
-	const initial = generate();
-	if (initial) displayPassword.value = initial;
-});
-
-const handleCopy = async () => {
-	await copy(displayPassword.value || generatedPassword.value || "");
+const createPassword = (passwordLength: number) => {
+	const safeLength = Math.max(0, Math.min(32, Math.floor(passwordLength)));
+	let password = "";
+	for (let i = 0; i < safeLength; i++) {
+		password += CHARACTER_SET.charAt(
+			Math.floor(Math.random() * CHARACTER_SET.length),
+		);
+	}
+	return password;
 };
 
+const copyToClipboard = async (text: string) => {
+	if (!text) return false;
+	try {
+		await navigator.clipboard.writeText(text);
+		copied.value = true;
+		setTimeout(() => {
+			copied.value = false;
+		}, 1200);
+		return true;
+	} catch {
+		return false;
+	}
+};
+
+onMounted(() => {
+	generateWithAnimation();
+});
+
+onBeforeUnmount(() => {
+	if (animationInterval.value) clearInterval(animationInterval.value);
+});
+
 const generateWithAnimation = async () => {
-	imageSeed.value = `${Date.now()}-${Math.random()}`;
 	isRegenerating.value = true;
-	const previousPassword = displayPassword.value || generatedPassword.value
-		|| "";
+	const previousPassword = displayPassword.value || "";
 	let counter = 0;
-	let characters = "";
-	if (passwordOptionsStore.includeUppercase) {
-		characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	}
-	if (passwordOptionsStore.includeLowercase) {
-		characters += "abcdefghijklmnopqrstuvwxyz";
-	}
-	if (passwordOptionsStore.includeNumbers) characters += "0123456789";
-	if (passwordOptionsStore.includeSymbols) {
-		characters += "!@#$%^&*()_+-=[]{}|;:,.<>?";
-	}
-	if (!characters) {
-		characters =
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-	}
+	const characters = CHARACTER_SET;
 
 	if (animationInterval.value) clearInterval(animationInterval.value);
 
-	animationInterval.value = window.setInterval(async () => {
+	animationInterval.value = window.setInterval(() => {
 		let tempPassword = "";
-		const length = previousPassword.length || passwordOptionsStore.length || 12;
-		for (let i = 0; i < length; i++) {
+		const targetLength = previousPassword.length || length.value;
+		for (let i = 0; i < targetLength; i++) {
 			tempPassword += characters.charAt(
 				Math.floor(Math.random() * characters.length),
 			);
@@ -61,40 +64,25 @@ const generateWithAnimation = async () => {
 
 		if (counter > 10) {
 			if (animationInterval.value) clearInterval(animationInterval.value);
-			await generateAndCopy();
-			setTimeout(() => {
-				displayPassword.value = generatedPassword.value || "";
-				isRegenerating.value = false;
-			}, 100);
+			const finalPassword = createPassword(length.value);
+			displayPassword.value = finalPassword;
+			void copyToClipboard(finalPassword);
+			isRegenerating.value = false;
 		}
 	}, 30);
 };
 
 watch(
-	() => [
-		passwordOptionsStore.length,
-		passwordOptionsStore.includeUppercase,
-		passwordOptionsStore.includeLowercase,
-		passwordOptionsStore.includeNumbers,
-		passwordOptionsStore.includeSymbols,
-	],
+	() => length.value,
 	() => {
-		displayPassword.value = "";
-		isRegenerating.value = false;
-		if (animationInterval.value) clearInterval(animationInterval.value);
-		animationInterval.value = null;
+		generateWithAnimation();
 	},
 );
-
-void copied;
-void handleCopy;
-void generateWithAnimation;
-void imageUrl;
 </script>
 
 <template>
 	<div class="min-h-full flex items-center justify-center p-0 text-zinc-100">
-		<div class="w-11/12 md:w-3/4 max-h-full bg-transparent rounded-2xl shadow-lg overflow-y-auto border border-zinc-800/80">
+		<div class="w-11/12 md:w-11/12 max-w-6xl bg-transparent rounded-2xl shadow-lg overflow-y-auto border border-zinc-800/80">
 			<div class="p-6 text-center">
 				<div class="flex items-center justify-center gap-3">
 					<Icon name="mdi:shield-lock" class="text-4xl text-blue-400" />
@@ -105,33 +93,42 @@ void imageUrl;
 				</p>
 			</div>
 
-			<div class="p-5">
-				<div class="grid grid-cols-1 lg:grid-cols-6 gap-6">
-					<div class="lg:col-span-4">
-						<PasswordOptions />
-					</div>
-					<div class="lg:col-span-2 flex flex-col gap-6 h-full">
-						<PasswordDisplay
-							:display-password="displayPassword"
-							:copied="copied"
-							:is-regenerating="isRegenerating"
-							@generateAndCopy="generateWithAnimation"
-							@copy="handleCopy"
-						/>
-						<div class="overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-950/40">
-							<div class="w-full aspect-video">
-								<img
-									:src="imageUrl"
-									alt="Random image"
-									class="w-full h-full object-cover"
-									loading="lazy"
-									decoding="async"
-								/>
-							</div>
-							<div class="px-3 py-2 text-xs text-zinc-400 border-t border-zinc-800/80">
-								sponsored by xxx
-							</div>
+			<div class="p-5 space-y-6">
+				<div
+					class="rounded-2xl border border-zinc-800/80 bg-gradient-to-b from-zinc-950/70 to-zinc-950/30 p-8 md:p-12 cursor-pointer"
+					@click="generateWithAnimation"
+				>
+					<div class="flex items-center justify-between gap-4">
+						<div class="text-sm text-zinc-300">
+							<span v-if="copied">Copied</span>
+							<span v-else>Click to randomize & copy</span>
 						</div>
+						<div class="text-xs text-zinc-400">
+							Length {{ length }}/32
+						</div>
+					</div>
+
+					<div
+						class="mt-7 w-full text-center font-mono text-5xl md:text-7xl tracking-wider break-all select-all"
+						:class="isRegenerating ? 'opacity-70' : 'opacity-100'"
+					>
+						<span
+							class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-blue-400 to-violet-400 drop-shadow"
+						>
+							{{ displayPassword }}
+						</span>
+					</div>
+
+					<div class="mt-16 grid gap-2">
+						<input
+							type="range"
+							id="length"
+							min="0"
+							max="32"
+							v-model.number="length"
+							class="w-full h-1 bg-zinc-900/60 rounded-lg appearance-none cursor-pointer accent-zinc-400"
+						/>
+						<div class="text-[11px] text-zinc-600 text-center">0 / 32</div>
 					</div>
 				</div>
 			</div>
