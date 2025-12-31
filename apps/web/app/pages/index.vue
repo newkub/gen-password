@@ -27,17 +27,20 @@ const handleCopy = async () => {
 const generateWithAnimation = async () => {
 	imageSeed.value = `${Date.now()}-${Math.random()}`;
 	isRegenerating.value = true;
-	const previousPassword =
-		displayPassword.value || generatedPassword.value || "";
+	const previousPassword = displayPassword.value || generatedPassword.value
+		|| "";
 	let counter = 0;
 	let characters = "";
-	if (passwordOptionsStore.includeUppercase)
+	if (passwordOptionsStore.includeUppercase) {
 		characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	if (passwordOptionsStore.includeLowercase)
+	}
+	if (passwordOptionsStore.includeLowercase) {
 		characters += "abcdefghijklmnopqrstuvwxyz";
+	}
 	if (passwordOptionsStore.includeNumbers) characters += "0123456789";
-	if (passwordOptionsStore.includeSymbols)
+	if (passwordOptionsStore.includeSymbols) {
 		characters += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+	}
 	if (!characters) {
 		characters =
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

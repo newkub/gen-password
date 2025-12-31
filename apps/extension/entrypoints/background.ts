@@ -1,3 +1,3 @@
 export default defineBackground(() => {
-  // Background loaded
+	// Background loaded
 });

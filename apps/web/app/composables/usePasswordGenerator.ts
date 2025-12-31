@@ -67,8 +67,7 @@ export const usePasswordGenerator = () => {
 			generatedPassword.value = newPassword;
 			return newPassword;
 		} catch (err) {
-			error.value =
-				err instanceof Error ? err.message : "Failed to generate password";
+			error.value = err instanceof Error ? err.message : "Failed to generate password";
 			return "";
 		}
 	};
@@ -91,10 +90,9 @@ export const usePasswordGenerator = () => {
 			const newPassword = generate();
 			await copy(newPassword);
 		} catch (err) {
-			error.value =
-				err instanceof Error
-					? err.message
-					: "Failed to generate and copy password";
+			error.value = err instanceof Error
+				? err.message
+				: "Failed to generate and copy password";
 		}
 	};
 
