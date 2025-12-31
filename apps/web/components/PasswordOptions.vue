@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { useRuntimeConfig } from "nuxt/app";
 import { computed } from "vue";
 
-import { usePasswordOptionsStore } from "~/stores/password";
+import { usePasswordOptions } from "~/composables/usePasswordOptions";
 
-const passwordOptions = usePasswordOptionsStore();
+const passwordOptions = usePasswordOptions();
 
 void passwordOptions;
 
@@ -11,9 +12,9 @@ const config = useRuntimeConfig();
 const minPasswordLength = Number(config.public.passwordMinLength) || 16;
 
 const lengthModel = computed({
-	get: () => passwordOptions.length,
+	get: () => passwordOptions.length.value,
 	set: (value: number) => {
-		passwordOptions.length = Math.max(value, minPasswordLength);
+		passwordOptions.length.value = Math.max(value, minPasswordLength);
 	},
 });
 
@@ -65,9 +66,9 @@ void lengthModel;
 			</p>
 			<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 				<button
-					@click="passwordOptions.includeUppercase = !passwordOptions.includeUppercase"
+					@click="passwordOptions.includeUppercase.value = !passwordOptions.includeUppercase.value"
 					class="p-3 rounded-lg border transition-all duration-200 text-left flex items-center cursor-pointer"
-					:class="passwordOptions.includeUppercase
+					:class="passwordOptions.includeUppercase.value
 					? 'bg-blue-500/20 border-blue-500 text-white'
 					: 'bg-zinc-700/40 border-zinc-600/80 text-zinc-200 hover:bg-zinc-700/60'"
 				>
@@ -78,9 +79,9 @@ void lengthModel;
 					</div>
 				</button>
 				<button
-					@click="passwordOptions.includeLowercase = !passwordOptions.includeLowercase"
+					@click="passwordOptions.includeLowercase.value = !passwordOptions.includeLowercase.value"
 					class="p-3 rounded-lg border transition-all duration-200 text-left flex items-center cursor-pointer"
-					:class="passwordOptions.includeLowercase
+					:class="passwordOptions.includeLowercase.value
 					? 'bg-blue-500/20 border-blue-500 text-white'
 					: 'bg-zinc-700/40 border-zinc-600/80 text-zinc-200 hover:bg-zinc-700/60'"
 				>
@@ -91,9 +92,9 @@ void lengthModel;
 					</div>
 				</button>
 				<button
-					@click="passwordOptions.includeNumbers = !passwordOptions.includeNumbers"
+					@click="passwordOptions.includeNumbers.value = !passwordOptions.includeNumbers.value"
 					class="p-3 rounded-lg border transition-all duration-200 text-left flex items-center cursor-pointer"
-					:class="passwordOptions.includeNumbers
+					:class="passwordOptions.includeNumbers.value
 					? 'bg-blue-500/20 border-blue-500 text-white'
 					: 'bg-zinc-700/40 border-zinc-600/80 text-zinc-200 hover:bg-zinc-700/60'"
 				>
@@ -104,9 +105,9 @@ void lengthModel;
 					</div>
 				</button>
 				<button
-					@click="passwordOptions.includeSymbols = !passwordOptions.includeSymbols"
+					@click="passwordOptions.includeSymbols.value = !passwordOptions.includeSymbols.value"
 					class="p-3 rounded-lg border transition-all duration-200 text-left flex items-center cursor-pointer"
-					:class="passwordOptions.includeSymbols
+					:class="passwordOptions.includeSymbols.value
 					? 'bg-blue-500/20 border-blue-500 text-white'
 					: 'bg-zinc-700/40 border-zinc-600/80 text-zinc-200 hover:bg-zinc-700/60'"
 				>

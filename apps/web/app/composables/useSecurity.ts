@@ -1,23 +1,23 @@
 import { computed } from "vue";
 
-import { usePasswordOptionsStore } from "~/stores/password";
+import { usePasswordOptions } from "~/composables/usePasswordOptions";
 import type { SecurityLevel } from "~/types/password";
 
 export const useSecurity = () => {
 	const config = useRuntimeConfig();
 	const minLength = Number(config.public.passwordMinLength) || 16;
 
-	const passwordOptions = usePasswordOptionsStore();
+	const passwordOptions = usePasswordOptions();
 
 	const securityLevel = computed<SecurityLevel>(() => {
 		const selectedTypes = [
-			passwordOptions.includeUppercase,
-			passwordOptions.includeLowercase,
-			passwordOptions.includeNumbers,
-			passwordOptions.includeSymbols,
+			passwordOptions.includeUppercase.value,
+			passwordOptions.includeLowercase.value,
+			passwordOptions.includeNumbers.value,
+			passwordOptions.includeSymbols.value,
 		].filter(Boolean).length;
 
-		const length = passwordOptions.length;
+		const length = passwordOptions.length.value;
 
 		if (selectedTypes === 4 && length >= minLength) return "veryStrong";
 		if (selectedTypes === 4 && length >= 12) return "strong";

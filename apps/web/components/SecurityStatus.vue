@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { usePasswordOptionsStore } from "~/stores/password";
+import { useSecurity } from "../app/composables/useSecurity";
+import { usePasswordOptions } from "~/composables/usePasswordOptions";
 
 const {
 	securityLevelColor,
@@ -8,7 +9,7 @@ const {
 	securityLevelBackgroundColor,
 	securityLevelGlow,
 } = useSecurity();
-const passwordOptions = usePasswordOptionsStore();
+const passwordOptions = usePasswordOptions();
 
 void securityLevelColor;
 void securityLevelText;
@@ -33,28 +34,28 @@ void passwordOptions;
 						<Icon
 							name="mdi:format-letter-case-upper"
 							class="text-xl"
-							:class="passwordOptions.includeUppercase
+							:class="passwordOptions.includeUppercase.value
 							? 'text-green-400'
 							: 'text-zinc-600'"
 						/>
 						<Icon
 							name="mdi:format-letter-case-lower"
 							class="text-xl"
-							:class="passwordOptions.includeLowercase
+							:class="passwordOptions.includeLowercase.value
 							? 'text-green-400'
 							: 'text-zinc-600'"
 						/>
 						<Icon
 							name="mdi:numeric"
 							class="text-xl"
-							:class="passwordOptions.includeNumbers
+							:class="passwordOptions.includeNumbers.value
 							? 'text-green-400'
 							: 'text-zinc-600'"
 						/>
 						<Icon
 							name="mdi:pound"
 							class="text-xl"
-							:class="passwordOptions.includeSymbols
+							:class="passwordOptions.includeSymbols.value
 							? 'text-green-400'
 							: 'text-zinc-600'"
 						/>
@@ -68,7 +69,7 @@ void passwordOptions;
 			<div class="flex items-center justify-between">
 				<span class="text-sm text-zinc-200">Password Length:</span>
 				<span class="text-sm font-medium text-white">{{
-						passwordOptions.length
+						passwordOptions.length.value
 					}}
 					characters</span>
 			</div>

@@ -1,7 +1,6 @@
-import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
-import { usePasswordOptionsStore } from "~/stores/password";
+import { usePasswordOptions } from "~/composables/usePasswordOptions";
 import type { PasswordOptions } from "~/types/password";
 
 const CHARACTER_SETS = {
@@ -49,8 +48,7 @@ export const usePasswordGenerator = () => {
 	const config = useRuntimeConfig();
 	const minLength = Number(config.public.passwordMinLength) || 16;
 
-	const passwordOptionsStore = usePasswordOptionsStore();
-	const { ...passwordOptions } = storeToRefs(passwordOptionsStore);
+	const passwordOptions = usePasswordOptions();
 
 	const generatedPassword = ref("");
 	const copied = ref(false);
@@ -60,8 +58,15 @@ export const usePasswordGenerator = () => {
 		try {
 			error.value = "";
 			copied.value = false;
+			const options: PasswordOptions = {
+				length: passwordOptions.length.value,
+				includeUppercase: passwordOptions.includeUppercase.value,
+				includeLowercase: passwordOptions.includeLowercase.value,
+				includeNumbers: passwordOptions.includeNumbers.value,
+				includeSymbols: passwordOptions.includeSymbols.value,
+			};
 			const newPassword = generatePassword(
-				passwordOptionsStore.$state,
+				options,
 				minLength,
 			);
 			generatedPassword.value = newPassword;
@@ -97,7 +102,7 @@ export const usePasswordGenerator = () => {
 	};
 
 	const reset = () => {
-		passwordOptionsStore.reset();
+		passwordOptions.reset();
 		generatedPassword.value = "";
 		copied.value = false;
 		error.value = "";

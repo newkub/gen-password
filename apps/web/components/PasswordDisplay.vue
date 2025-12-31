@@ -21,8 +21,8 @@ void emit;
 			<div
 				class="group relative bg-zinc-900/80 border-2 border-dashed border-zinc-700/70 rounded-lg p-3 mb-4 min-h-[52px] flex items-center justify-center transition-colors"
 				:class="displayPassword && !isRegenerating
-					? 'cursor-pointer hover:border-blue-500/70'
-					: 'cursor-default'"
+				? 'cursor-pointer hover:border-blue-500/70'
+				: 'cursor-default'"
 				@click="displayPassword && !isRegenerating && emit('copy')"
 			>
 				<p class="text-xl font-mono break-all text-zinc-200 text-center">
@@ -53,10 +53,10 @@ void emit;
 				<Icon v-else name="mdi:flash" class="text-2xl" />
 				<span class="text-lg">{{
 					isRegenerating
-						? "Generating..."
-						: (copied
-							? "Copied!"
-							: (displayPassword ? "Regenerate & Copy" : "Generate & Copy"))
+					? "Generating..."
+					: (copied
+						? "Copied!"
+						: (displayPassword ? "Regenerate & Copy" : "Generate & Copy"))
 				}}</span>
 			</button>
 		</div>

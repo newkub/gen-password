@@ -1,7 +1,3 @@
 {
-	"extends": "./.nuxt/tsconfig.json",
-	"compilerOptions": {
-		"target": "ES2022",
-		"moduleResolution": "Bundler"
-	}
+	"extends": "./.nuxt/tsconfig.json"
 }

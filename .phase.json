@@ -1,8 +1,0 @@
-{
-	"version": "2",
-	"phaseApp": "General",
-	"appId": "267df950-49a1-4f7f-a7c5-4a830cc38928",
-	"defaultEnv": "Development",
-	"envId": "941b7a01-b0f7-47d8-8ead-3292c648cf13",
-	"monorepoSupport": false
-}
