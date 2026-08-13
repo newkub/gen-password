@@ -31,6 +31,26 @@ const copyToClipboard = async (text: string) => {
 		}, 1200);
 		return true;
 	} catch {
+		try {
+			const textArea = document.createElement("textarea");
+			textArea.value = text;
+			textArea.style.position = "fixed";
+			textArea.style.left = "-999999px";
+			textArea.style.top = "-999999px";
+			document.body.appendChild(textArea);
+			textArea.focus();
+			textArea.select();
+			const successful = document.execCommand("copy");
+			document.body.removeChild(textArea);
+			if (successful) {
+				copied.value = true;
+				setTimeout(() => {
+					copied.value = false;
+				}, 1200);
+				return true;
+			}
+		} catch {
+		}
 		return false;
 	}
 };
@@ -109,7 +129,7 @@ watch(
 					</div>
 
 					<div
-						class="mt-7 w-full text-center font-mono text-5xl md:text-7xl tracking-wider break-all select-all"
+						class="mt-7 w-full text-center font-mono text-8xl md:text-[12rem] tracking-wider break-all select-all"
 						:class="isRegenerating ? 'opacity-70' : 'opacity-100'"
 					>
 						<span

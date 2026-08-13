@@ -4,6 +4,9 @@ export default defineNuxtConfig({
 	compatibilityDate: "2025-12-31",
 	ssr: false,
 	devtools: { enabled: true },
+	devServer: {
+		port: 3001,
+	},
 	modules: [
 		"nuxt-mcp-dev",
 		"@pinia/nuxt",

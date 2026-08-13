@@ -17,11 +17,11 @@
 		"verify": "bun run format && bun run lint && bun run test && bun run build"
 	},
 	"devDependencies": {
-		"@types/chrome": "^0.1.32",
-		"dprint": "^0.51.1",
-		"oxlint": "^1.36.0",
-		"oxlint-tsgolint": "^0.10.0",
-		"typescript": "^5.9.3",
-		"wxt": "^0.20.13"
+		"@types/chrome": "^0.1.43",
+		"dprint": "^0.54.0",
+		"oxlint": "^1.69.0",
+		"oxlint-tsgolint": "^0.23.0",
+		"typescript": "^6.0.3",
+		"wxt": "^0.20.26"
 	}
 }
