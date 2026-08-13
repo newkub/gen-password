@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"jsx": "preserve",
+		"jsxImportSource": "solid-js",
+		"moduleResolution": "Bundler",
+		"module": "ESNext",
+		"target": "ES2022",
+		"lib": ["ES2022", "DOM", "DOM.Iterable"],
+		"paths": {
+			"~/*": ["./src/*"]
+		},
+		"strict": true,
+		"skipLibCheck": true,
+		"noEmit": true,
+		"isolatedModules": true,
+		"allowJs": false,
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"types": ["vite/client"]
+	},
+	"include": ["src/**/*", "vite.config.ts", "uno.config.ts"],
+	"exclude": ["node_modules", "dist", ".output"]
+}

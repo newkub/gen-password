@@ -13,11 +13,6 @@ pre-rebase:
     - name: fetch-origin
       run: git fetch origin
 
-post-receive:
-  jobs:
-    - name: open repo
-      run: gh repo view --web
-
 post-checkout:
   jobs:
     - name: install

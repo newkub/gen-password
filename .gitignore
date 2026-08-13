@@ -1,20 +1,11 @@
-# Nuxt dev/build outputs
+# Build outputs
+dist
 .output
-.data
-.nuxt
 .nitro
 .cache
-dist
-
-# WXT outputs
-.wxt
-web-ext.config.ts
-
-# Turborepo
-.turbo
 
 # Node dependencies
-/node_modules
+node_modules
 
 # Logs
 logs
@@ -30,3 +21,5 @@ logs
 .env.*
 !.env.example
 
+# Vite
+.vite
