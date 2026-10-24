@@ -1,79 +1,112 @@
+> ![Status](https://img.shields.io/badge/status-in_development-red)
+
 # gen-password
 
-A fast, offline password generator built with SolidJS, TypeScript, Vite, and UnoCSS.
-
-Passwords are created in the browser with `crypto.getRandomValues()` and unbiased
-rejection sampling. Nothing is sent to a server, stored, or logged.
+A single-screen password generator built with SolidJS, TypeScript, Vite, and UnoCSS. Every password is produced in the browser with `crypto.getRandomValues()` and unbiased rejection sampling — nothing is sent to a server, stored, or logged.
 
 Live at [gen-password.newkubise.workers.dev](https://gen-password.newkubise.workers.dev).
 
+![SolidJS](https://img.shields.io/badge/SolidJS-1.9-2c4f7c)
+![TypeScript](https://img.shields.io/badge/TypeScript-7-3178c6)
+![Vite](https://img.shields.io/badge/Vite-8-646cff)
+![UnoCSS](https://img.shields.io/badge/UnoCSS-66-1f2937)
+![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-f38020)
+
+```text
+┌──────────────────────────────────────────────────────────┐
+│  options ──▶ CSPRNG ──▶ shuffle ──▶ render ──▶ clipboard │
+│  length 20   random      mixes       20 chars   on click │
+└──────────────────────────────────────────────────────────┘
+```
+
+## Get Started
+
+1. Install dependencies — Bun installs SolidJS, Vite, UnoCSS, and the bundled fonts
+   ```bash
+   bun install
+   ```
+
+2. Start the dev server — Vite prints the local URL
+   ```bash
+   bun run dev
+   ```
+
+3. Verify a change — type check, then the password unit tests
+   ```bash
+   bun run check
+   bun run test
+   ```
+
+4. Build for production — type check plus a Vite build into `dist/`
+   ```bash
+   bun run build
+   ```
+
 ## Features
 
-- One click gives a cryptographically secure 20-character password using lower, upper, digits, and symbols
-- Click-to-copy with per-character wave feedback and a clipboard fallback for non-secure contexts
-- Side-by-side Random and Copy (primary) actions, with the password as the only hero element
-- Hide/reveal toggle and keyboard access
-- Charcoal UI with a faint warm glow, subtle grid and grain background, bundled type stack (Inter + JetBrains Mono), and `prefers-reduced-motion` support
-- Simple buttons with a cream solid Copy action, a thin-outline Random action, and an orange copied state
-- Staggered card-flip reveal whenever a new password is generated
+| Icon | Feature | Description | Benefit | Usage |
+|:---:|:--------|:------------|:--------|:------|
+| ![icon](https://api.iconify.design/mdi:shield-lock.svg?color=%231976d2&width=16) | Secure randomness | `crypto.getRandomValues()` with rejection sampling instead of `Math.random()` | No predictable or modulo-biased output | `generatePassword()` |
+| ![icon](https://api.iconify.design/mdi:textbox-password.svg?color=%23388e3c&width=16) | 20-character default | Lowercase, uppercase, digits, and symbols, with one of each guaranteed | A strong password is ready on load | `length: 20` |
+| ![icon](https://api.iconify.design/mdi:palette.svg?color=%237b1fa2&width=16) | Character-aware color | Digits and symbols render in separate warm tones | Symbols stand out at a glance | `.pw-digit` |
+| ![icon](https://api.iconify.design/mdi:content-copy.svg?color=%23f57c00&width=16) | Click to copy | The password row copies on click, `Enter`, or `Space` | Copy takes one action with no selecting | `onCopy()` |
+| ![icon](https://api.iconify.design/mdi:check-circle.svg?color=%2300796b&width=16) | Copied feedback | The button reads Copied for two seconds with a per-character wave | The write is confirmed without a toast | `.is-copied` |
+| ![icon](https://api.iconify.design/mdi:eye-off.svg?color=%23303f9f&width=16) | Hide and reveal | The eye toggle masks every character with bullets | The screen is safe to show in public | `hidden()` |
+| ![icon](https://api.iconify.design/mdi:dice-multiple.svg?color=%23c2185b&width=16) | Random and Copy split | Outline Random regenerates, solid cream Copy is primary | The main action is obvious at a glance | `regenerate()` |
+| ![icon](https://api.iconify.design/mdi:keyboard.svg?color=%230097a7&width=16) | Keyboard shortcut | `Ctrl`/`Cmd` + `Enter` regenerates while the refresh icon spins | Fast repeat generation without the mouse | `Ctrl + Enter` |
+| ![icon](https://api.iconify.design/mdi:content-paste.svg?color=%23ffa000&width=16) | Clipboard fallback | Falls back to a hidden textarea and shows an inline hint when blocked | Copy still works on insecure contexts | `copyText()` |
+| ![icon](https://api.iconify.design/mdi:wifi-off.svg?color=%23455a64&width=16) | Offline by design | No network calls, analytics, persistence, or third-party scripts | Nothing leaves the browser | `index.html` |
+| ![icon](https://api.iconify.design/mdi:weather-night.svg?color=%235d4037&width=16) | Charcoal atmosphere | Ember orbs, a 64px grid, vignette, and grain over `#14100d`, with self-hosted Inter and JetBrains Mono | Attention stays on the password | `.bg-scene` |
+| ![icon](https://api.iconify.design/mdi:motion-play.svg?color=%2326a69a&width=16) | Motion with a brake | Card-flip reveal and the copy wave stop under `prefers-reduced-motion` | Delightful by default, calm on request | `prefersReducedMotion()` |
 
-## Scripts
+## Usage
 
-```bash
-bun install
-bun run dev       # dev server
-bun run check     # TypeScript
-bun run test      # Vitest
-bun run build     # typecheck + production build
-bun run preview   # serve dist
-bun run deploy    # build + deploy to Cloudflare Workers
+### Usage via Web
+
+<details>
+<summary>One screen: generate, reveal, copy</summary>
+
+Open the app at [gen-password.newkubise.workers.dev](https://gen-password.newkubise.workers.dev) — a fresh password is generated on load.
+
+1. Press **Copy** to write the password to the clipboard; the button reads **Copied** for two seconds.
+2. Press **Random** or `Ctrl`/`Cmd` + `Enter` for a new password; the characters flip in one after another.
+3. Click the password row, or focus it and press `Enter`/`Space`, to copy it.
+4. Press the eye button to mask the password with bullets.
+5. If the browser blocks the Clipboard API, an inline hint asks you to copy manually.
+
+```text
+┌──────────────────────────────────────────────────────────┐
+│  gen-password · ready                                    │
+│                                                          │
+│  K#9v!mQ2@xLp7&Rt5$Wn                                    │
+│                                                          │
+│  20 characters · lowercase, uppercase, digits, symbols   │
+│                                              eye toggle  │
+│                                                          │
+│  [ Random ]                                 [ Copy ]     │
+└──────────────────────────────────────────────────────────┘
 ```
 
-## Keyboard
-
-| Keys | Action |
-| --- | --- |
-| `Enter` / `Space` on the password | Copy |
-| `Ctrl` / `Cmd` + `Enter` | Generate a new password |
-
-## Structure
-
-```
-src/
-  App.tsx                     UI, state, copy flow
-  components/
-    PasswordDisplay.tsx       Per-character rendering and animations
-    Icons.tsx                 Inline SVG icons
-  lib/
-    password.ts               Secure generation and strength math
-    clipboard.ts              Async clipboard + legacy fallback
-    motion.ts                 Reduced-motion aware animation helpers
-  styles/theme.css            Design tokens and animations
-tests/password.test.ts        Generator and strength tests
-wrangler.jsonc                Cloudflare Workers static-assets config
-```
+</details>
 
 ## Deployment
 
-The Worker `gen-password` serves `dist/` as Cloudflare Workers static assets with
-SPA fallback.
-
-- Build output: `bun run build`
-- Manual deploy: `bun run deploy`
-- No secrets are stored in the repo; Wrangler uses the local OAuth session
-
-For continuous deployment, connect the GitHub repository in the Cloudflare
-dashboard under **Workers & Pages → gen-password → Settings → Builds & deployments**
-and use:
+The Worker `gen-password` publishes `dist/` as static assets with a single-page-application fallback. There are no bindings and no secrets; Wrangler uses the local OAuth session.
 
 | Setting | Value |
-| --- | --- |
+|:--------|:------|
+| Worker name | `gen-password` |
 | Build command | `bun run build` |
 | Deploy command | `bunx wrangler deploy` |
+| Assets directory | `dist/` |
+| Fallback | `single-page-application` |
 | Root directory | `/` |
+
+`bun run deploy` runs the build and `wrangler deploy` in one step. For continuous deployment, connect the GitHub repository under **Workers & Pages → gen-password → Settings → Builds & deployments** and use the commands above.
 
 ## Security notes
 
-- Uses `crypto.getRandomValues()` with rejection sampling; no `Math.random()`
-- Clipboard writes prefer the async Clipboard API and fall back to a temporary textarea
-- No analytics, network requests, persistence, or third-party scripts
+- `crypto.getRandomValues()` only, with rejection sampling; `Math.random()` is never used.
+- One character from every enabled charset is placed first, the rest of the length is filled from the full pool, then Fisher–Yates shuffles the result.
+- Clipboard writes prefer the async Clipboard API and fall back to a temporary textarea.
+- No network requests, analytics, persistence, or third-party scripts.
