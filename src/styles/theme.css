@@ -10,8 +10,8 @@ body {
 
 body {
   font-family: var(--font-app);
-  background-color: #fff7ed;
-  color: #3b1d0e;
+  background-color: #14100d;
+  color: #f5eee3;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -21,8 +21,8 @@ body {
 }
 
 ::selection {
-  background: rgba(249, 115, 22, 0.24);
-  color: #2b1408;
+  background: rgba(249, 115, 22, 0.3);
+  color: #fff7ed;
 }
 
 /* ---------- background ---------- */
@@ -34,10 +34,10 @@ body {
   overflow: hidden;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 110% 85% at 12% -10%, rgba(253, 186, 116, 0.5), transparent 62%),
-    radial-gradient(ellipse 90% 70% at 95% 100%, rgba(254, 215, 170, 0.62), transparent 64%),
-    radial-gradient(ellipse 70% 60% at 65% 45%, rgba(255, 237, 213, 0.85), transparent 72%),
-    linear-gradient(165deg, #fffaf3 0%, #fff3e4 52%, #ffe9d2 100%);
+    radial-gradient(ellipse 110% 85% at 12% -10%, rgba(194, 65, 12, 0.16), transparent 62%),
+    radial-gradient(ellipse 90% 70% at 95% 100%, rgba(120, 53, 15, 0.22), transparent 64%),
+    radial-gradient(ellipse 70% 60% at 65% 45%, rgba(41, 32, 26, 0.75), transparent 72%),
+    linear-gradient(165deg, #17120f 0%, #14100d 52%, #100d0b 100%);
 }
 
 .orb {
@@ -52,7 +52,7 @@ body {
   left: -14rem;
   width: 42rem;
   height: 42rem;
-  background: radial-gradient(circle at 50% 50%, rgba(253, 186, 116, 0.34), transparent 68%);
+  background: radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.16), transparent 68%);
   animation: drift-a 24s ease-in-out infinite alternate;
 }
 
@@ -61,7 +61,7 @@ body {
   bottom: -16rem;
   width: 36rem;
   height: 36rem;
-  background: radial-gradient(circle at 50% 50%, rgba(254, 215, 170, 0.4), transparent 68%);
+  background: radial-gradient(circle at 50% 50%, rgba(251, 146, 60, 0.1), transparent 68%);
   animation: drift-b 30s ease-in-out infinite alternate;
 }
 
@@ -70,7 +70,7 @@ body {
   left: 46%;
   width: 28rem;
   height: 28rem;
-  background: radial-gradient(circle at 50% 50%, rgba(251, 146, 60, 0.14), transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(180, 83, 9, 0.1), transparent 70%);
   animation: drift-c 36s ease-in-out infinite alternate;
 }
 
@@ -78,8 +78,8 @@ body {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, rgba(59, 29, 14, 0.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(59, 29, 14, 0.055) 1px, transparent 1px);
+    linear-gradient(to right, rgba(245, 238, 227, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 238, 227, 0.05) 1px, transparent 1px);
   background-size: 64px 64px;
   -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, #000 25%, transparent 78%);
   mask-image: radial-gradient(ellipse 75% 65% at 50% 42%, #000 25%, transparent 78%);
@@ -89,15 +89,15 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(120% 90% at 50% 0%, transparent 58%, rgba(194, 65, 12, 0.07) 100%),
-    linear-gradient(to bottom, rgba(255, 247, 237, 0), rgba(253, 186, 116, 0.14));
+    radial-gradient(120% 90% at 50% 0%, transparent 52%, rgba(0, 0, 0, 0.45) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.35));
 }
 
 .bg-noise {
   position: absolute;
   inset: 0;
-  opacity: 0.028;
-  mix-blend-mode: multiply;
+  opacity: 0.035;
+  mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -149,31 +149,31 @@ body {
 }
 
 .btn-primary {
-  color: #fff7ed;
-  background: #2b1408;
+  color: #1a110b;
+  background: #efe6d8;
 }
 
 .btn-primary:hover {
-  background: #3b1d0e;
+  background: #f8f1e6;
 }
 
 .btn-primary:active {
-  background: #4d2814;
+  background: #dbcdb9;
 }
 
 .btn-secondary {
-  border: 1px solid rgba(59, 29, 14, 0.18);
-  background: rgba(255, 253, 248, 0.35);
-  color: #3b1d0e;
+  border: 1px solid rgba(245, 238, 227, 0.18);
+  background: rgba(245, 238, 227, 0.04);
+  color: #efe7dc;
 }
 
 .btn-secondary:hover {
-  border-color: rgba(59, 29, 14, 0.32);
-  background: rgba(255, 253, 248, 0.7);
+  border-color: rgba(245, 238, 227, 0.32);
+  background: rgba(245, 238, 227, 0.08);
 }
 
 .btn-secondary:active {
-  background: rgba(59, 29, 14, 0.07);
+  background: rgba(245, 238, 227, 0.13);
 }
 
 .btn-primary.is-copied {
@@ -213,16 +213,16 @@ body {
 }
 
 .pw-digit {
-  color: #c2410c;
+  color: #fb923c;
 }
 
 .pw-symbol {
-  color: #b45309;
+  color: #d9a071;
 }
 
 .pw-done {
-  color: #c2410c;
-  text-shadow: 0 0 18px rgba(249, 115, 22, 0.22);
+  color: #fdba74;
+  text-shadow: 0 0 18px rgba(249, 115, 22, 0.32);
 }
 
 .pw-char.flip {
@@ -278,7 +278,7 @@ body {
 
 button:focus-visible,
 .pw-row:focus-visible {
-  outline: 2px solid rgba(194, 65, 12, 0.6);
+  outline: 2px solid rgba(251, 146, 60, 0.7);
   outline-offset: 3px;
 }
 
