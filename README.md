@@ -12,7 +12,8 @@ Live at [gen-password.newkubise.workers.dev](https://gen-password.newkubise.work
 - One click gives a cryptographically secure 20-character password using lower, upper, digits, and symbols
 - Click-to-copy with per-character wave feedback and a clipboard fallback for non-secure contexts
 - Hide/reveal toggle and keyboard access
-- Minimal dark UI with a self-hosted type stack (Inter + JetBrains Mono)
+- Full-width Random and Copy actions with the password shown as the main visual focus
+- Full-bleed dark UI with an animated gradient-orb and grid background, bundled type stack (Inter + JetBrains Mono), and `prefers-reduced-motion` support
 
 ## Scripts
 
