@@ -78,7 +78,7 @@ const App: Component = () => {
       <main class="relative mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-5 py-12">
         <header class="mb-6 flex items-center gap-2">
           <KeyIcon class="h-4.5 w-4.5 text-forge-violet" />
-          <span class="text-sm font-semibold tracking-tight">Passforge</span>
+          <span class="text-sm font-semibold tracking-tight">gen-password</span>
         </header>
 
         <section class="rounded-2xl border border-white/8 bg-white/[0.02] p-5">

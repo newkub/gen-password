@@ -1,9 +1,11 @@
-# Passforge
+# gen-password
 
 A fast, offline password generator built with SolidJS, TypeScript, Vite, and UnoCSS.
 
 Passwords are created in the browser with `crypto.getRandomValues()` and unbiased
 rejection sampling. Nothing is sent to a server, stored, or logged.
+
+Live at [gen-password.newkubise.workers.dev](https://gen-password.newkubise.workers.dev).
 
 ## Features
 
@@ -43,18 +45,29 @@ src/
     password.ts               Secure generation and strength math
     clipboard.ts              Async clipboard + legacy fallback
     motion.ts                 Reduced-motion aware animation helpers
-  styles/theme.css            Design tokens, animations, range styling
+  styles/theme.css            Design tokens and animations
 tests/password.test.ts        Generator and strength tests
 wrangler.jsonc                Cloudflare Workers static-assets config
 ```
 
 ## Deployment
 
-Live at [passforge.newkubise.workers.dev](https://passforge.newkubise.workers.dev).
+The Worker `gen-password` serves `dist/` as Cloudflare Workers static assets with
+SPA fallback.
 
-`bun run deploy` builds the SPA and uploads `dist/` to Cloudflare Workers
-static assets with SPA fallback. No secrets are required in the repo; Wrangler
-uses the local OAuth session.
+- Build output: `bun run build`
+- Manual deploy: `bun run deploy`
+- No secrets are stored in the repo; Wrangler uses the local OAuth session
+
+For continuous deployment, connect the GitHub repository in the Cloudflare
+dashboard under **Workers & Pages → gen-password → Settings → Builds & deployments**
+and use:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `bun run build` |
+| Deploy command | `bunx wrangler deploy` |
+| Root directory | `/` |
 
 ## Security notes
 
