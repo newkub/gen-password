@@ -7,11 +7,9 @@ rejection sampling. Nothing is sent to a server, stored, or logged.
 
 ## Features
 
-- Cryptographically secure generation with at least one character from every enabled set
-- Length 8–64, four character sets, and an option to exclude look-alikes (`I l 1 O 0 o`)
+- One click gives a cryptographically secure 20-character password using lower, upper, digits, and symbols
 - Click-to-copy with per-character wave feedback and a clipboard fallback for non-secure contexts
-- Compact strength estimate with entropy in bits
-- Hide toggle, keyboard access, and reduced-motion support
+- Hide/reveal toggle and keyboard access
 - Minimal dark UI with a self-hosted type stack (Inter + JetBrains Mono)
 
 ## Scripts
