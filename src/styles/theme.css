@@ -179,10 +179,12 @@ body {
   transform: translateY(0) scale(0.995);
 }
 
-.btn-secondary.is-copied {
-  border-color: rgba(94, 234, 212, 0.4);
-  color: #5eead4;
-  background: rgba(94, 234, 212, 0.08);
+.btn-primary.is-copied {
+  color: #04211d;
+  background: linear-gradient(135deg, #7ff3e0 0%, #5eead4 45%, #22d3ee 100%);
+  box-shadow:
+    0 24px 50px -26px rgba(94, 234, 212, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 /* ---------- password ---------- */
@@ -200,6 +202,7 @@ body {
   word-break: break-all;
   cursor: pointer;
   outline: none;
+  perspective: 1000px;
 }
 
 .pw-char {
@@ -224,8 +227,8 @@ body {
   text-shadow: 0 0 22px rgba(94, 234, 212, 0.45);
 }
 
-.pw-char.pop {
-  animation: char-pop 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
+.pw-char.flip {
+  animation: char-flip 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .pw-char.wave {
@@ -236,15 +239,19 @@ body {
   animation: icon-turn 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes char-pop {
+@keyframes char-flip {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.86);
-    filter: blur(4px);
+    transform: rotateX(-90deg) translateY(-0.1em);
+    filter: blur(3px);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: rotateX(0) translateY(0);
     filter: blur(0);
   }
 }
@@ -282,7 +289,7 @@ button:focus-visible,
     animation: none !important;
   }
 
-  .pw-char.pop,
+  .pw-char.flip,
   .pw-char.wave,
   .turn {
     animation: none !important;

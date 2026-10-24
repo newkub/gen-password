@@ -4,22 +4,6 @@ interface IconProps {
   class?: string;
 }
 
-export const KeyIcon: Component<IconProps> = (props) => (
-  <svg
-    class={props.class}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.8"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-  >
-    <circle cx="8.5" cy="15.5" r="4.5" />
-    <path d="M11.7 12.3 20 4m-2.5 2.5 2 2M14.8 7.2l2 2" />
-  </svg>
-);
-
 export const CopyIcon: Component<IconProps> = (props) => (
   <svg
     class={props.class}

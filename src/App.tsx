@@ -4,7 +4,6 @@ import {
   CopyIcon,
   EyeIcon,
   EyeOffIcon,
-  KeyIcon,
   RefreshIcon,
 } from "./components/Icons";
 import { PasswordDisplay } from "./components/PasswordDisplay";
@@ -80,16 +79,6 @@ const App: Component = () => {
       </div>
 
       <main class="relative z-10 mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center px-6 py-12">
-        <header class="mb-10 flex items-center gap-3">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-forge-violet">
-            <KeyIcon class="h-4.5 w-4.5" />
-          </span>
-          <span class="leading-tight">
-            <span class="block text-sm font-semibold tracking-tight">gen-password</span>
-            <span class="block text-[11px] text-mist-500">local · offline · secure</span>
-          </span>
-        </header>
-
         <PasswordDisplay
           value={password()}
           hidden={hidden()}
@@ -114,18 +103,23 @@ const App: Component = () => {
           </button>
         </div>
 
-        <div class="mt-9 flex flex-col gap-3">
-          <button type="button" class="btn-primary w-full" onClick={regenerate}>
-            <span ref={(element) => (genIcon = element)} class="inline-flex">
-              <RefreshIcon class="h-5 w-5" />
-            </span>
-            Random
-          </button>
-          <button type="button" class="btn-secondary w-full" classList={{ "is-copied": copied() }} onClick={copy}>
+        <div class="mt-9 grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            class="btn-primary w-full"
+            classList={{ "is-copied": copied() }}
+            onClick={copy}
+          >
             <Show when={copied()} fallback={<CopyIcon class="h-5 w-5" />}>
               <CheckIcon class="h-5 w-5" />
             </Show>
             {copied() ? "Copied" : "Copy"}
+          </button>
+          <button type="button" class="btn-secondary w-full" onClick={regenerate}>
+            <span ref={(element) => (genIcon = element)} class="inline-flex">
+              <RefreshIcon class="h-5 w-5" />
+            </span>
+            Random
           </button>
         </div>
 
@@ -134,14 +128,6 @@ const App: Component = () => {
             {error()}
           </p>
         </Show>
-
-        <p class="mt-10 text-center text-[11px] text-mist-500">
-          Click the password to copy ·{" "}
-          <kbd class="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-code text-[10px] text-mist-300">Ctrl</kbd>
-          {" + "}
-          <kbd class="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-code text-[10px] text-mist-300">Enter</kbd>{" "}
-          for a new one
-        </p>
       </main>
     </div>
   );

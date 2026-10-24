@@ -36,7 +36,7 @@ export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
           clearAnimations(refs);
           return;
         }
-        requestAnimationFrame(() => replayAnimation(refs, "pop", 16, 420));
+        requestAnimationFrame(() => replayAnimation(refs, "flip", 22, 420));
       },
     ),
   );

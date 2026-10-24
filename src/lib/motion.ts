@@ -10,7 +10,7 @@ export function replayAnimation(
 ): void {
   Array.from(elements).forEach((element, index) => {
     if (!element?.isConnected) return;
-    element.classList.remove("pop", "wave");
+    element.classList.remove("flip", "wave");
     void element.offsetWidth;
     element.style.animationDelay = `${Math.min(index * staggerMs, maxDelayMs)}ms`;
     element.classList.add(className);
@@ -23,7 +23,7 @@ export function replayAnimation(
 export function clearAnimations(elements: ArrayLike<HTMLElement | undefined>): void {
   Array.from(elements).forEach((element) => {
     if (!element) return;
-    element.classList.remove("pop", "wave");
+    element.classList.remove("flip", "wave");
     element.style.animationDelay = "";
   });
 }
