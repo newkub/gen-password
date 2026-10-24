@@ -13,8 +13,8 @@ Live at [gen-password.newkubise.workers.dev](https://gen-password.newkubise.work
 - Click-to-copy with per-character wave feedback and a clipboard fallback for non-secure contexts
 - Side-by-side Random and Copy (primary) actions, with the password as the only hero element
 - Hide/reveal toggle and keyboard access
-- Full-bleed warm orange UI with a drifting ember glow, grid and grain background, bundled type stack (Inter + JetBrains Mono), and `prefers-reduced-motion` support
-- Flat, high-contrast buttons with a solid Copy action and an amber copied state
+- Soft pastel peach UI with a gentle drifting glow, faint grid and grain background, bundled type stack (Inter + JetBrains Mono), and `prefers-reduced-motion` support
+- Simple buttons with a dark solid Copy action and an orange copied state
 - Staggered card-flip reveal whenever a new password is generated
 
 ## Scripts

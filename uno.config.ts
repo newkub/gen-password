@@ -10,25 +10,26 @@ export default defineConfig({
   transformers: [transformerVariantGroup(), transformerDirectives()],
   theme: {
     colors: {
-      ink: {
-        950: "#170a04",
-        900: "#1e0d05",
-        800: "#2a1308",
-        700: "#3a1a0b",
-      },
-      mist: {
-        500: "#b08a71",
-        400: "#c8a68c",
-        300: "#dcc3ad",
-        200: "#f0dcc8",
+      cream: {
+        50: "#fffdf9",
         100: "#fff7ed",
+        200: "#ffedd5",
+        300: "#fed7aa",
+      },
+      ink: {
+        950: "#241006",
+        900: "#3b1d0e",
+        800: "#4d2814",
+        700: "#6b3a1f",
+        500: "#96603f",
+        400: "#b3805e",
       },
       forge: {
         ember: "#fb923c",
         amber: "#fbbf24",
         flame: "#f97316",
-        coral: "#fda4af",
-        blush: "#fde68a",
+        coral: "#b91c1c",
+        blush: "#fdba74",
       },
     },
     font: {

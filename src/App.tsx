@@ -68,7 +68,7 @@ const App: Component = () => {
   onCleanup(() => clearTimeout(resetTimer));
 
   return (
-    <div class="relative flex min-h-dvh flex-col bg-ink-950 text-mist-100">
+    <div class="relative flex min-h-dvh flex-col bg-cream-100 text-ink-900">
       <div class="bg-scene" aria-hidden="true">
         <span class="orb orb-ember" />
         <span class="orb orb-amber" />
@@ -88,10 +88,10 @@ const App: Component = () => {
         />
 
         <div class="mt-4 flex items-center justify-between gap-3">
-          <p class="text-xs text-mist-500">20 characters · lowercase, uppercase, digits, symbols</p>
+          <p class="text-xs text-ink-500">20 characters · lowercase, uppercase, digits, symbols</p>
           <button
             type="button"
-            class="shrink-0 rounded-lg p-2 text-mist-500 transition hover:bg-white/5 hover:text-mist-100"
+            class="shrink-0 rounded-lg p-2 text-ink-500 transition hover:bg-ink-900/10 hover:text-ink-900"
             aria-pressed={hidden()}
             aria-label={hidden() ? "Show password" : "Hide password"}
             title={hidden() ? "Show password" : "Hide password"}
