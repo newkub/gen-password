@@ -70,9 +70,9 @@ const App: Component = () => {
   return (
     <div class="relative flex min-h-dvh flex-col bg-ink-950 text-mist-100">
       <div class="bg-scene" aria-hidden="true">
-        <span class="orb orb-violet" />
-        <span class="orb orb-mint" />
-        <span class="orb orb-sky" />
+        <span class="orb orb-ember" />
+        <span class="orb orb-amber" />
+        <span class="orb orb-crimson" />
         <span class="bg-grid" />
         <span class="bg-vignette" />
         <span class="bg-noise" />
@@ -104,6 +104,12 @@ const App: Component = () => {
         </div>
 
         <div class="mt-9 grid grid-cols-2 gap-3">
+          <button type="button" class="btn-secondary w-full" onClick={regenerate}>
+            <span ref={(element) => (genIcon = element)} class="inline-flex">
+              <RefreshIcon class="h-5 w-5" />
+            </span>
+            Random
+          </button>
           <button
             type="button"
             class="btn-primary w-full"
@@ -114,12 +120,6 @@ const App: Component = () => {
               <CheckIcon class="h-5 w-5" />
             </Show>
             {copied() ? "Copied" : "Copy"}
-          </button>
-          <button type="button" class="btn-secondary w-full" onClick={regenerate}>
-            <span ref={(element) => (genIcon = element)} class="inline-flex">
-              <RefreshIcon class="h-5 w-5" />
-            </span>
-            Random
           </button>
         </div>
 

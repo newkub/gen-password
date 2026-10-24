@@ -11,24 +11,24 @@ export default defineConfig({
   theme: {
     colors: {
       ink: {
-        950: "#05060a",
-        900: "#080a12",
-        800: "#0d101b",
-        700: "#151a28",
+        950: "#170a04",
+        900: "#1e0d05",
+        800: "#2a1308",
+        700: "#3a1a0b",
       },
       mist: {
-        500: "#5f687c",
-        400: "#7d869c",
-        300: "#9aa3b8",
-        200: "#c5cbda",
-        100: "#e9ecf4",
+        500: "#b08a71",
+        400: "#c8a68c",
+        300: "#dcc3ad",
+        200: "#f0dcc8",
+        100: "#fff7ed",
       },
       forge: {
-        violet: "#a78bfa",
-        mint: "#5eead4",
-        sky: "#38bdf8",
-        coral: "#fb7185",
-        amber: "#fcd34d",
+        ember: "#fb923c",
+        amber: "#fbbf24",
+        flame: "#f97316",
+        coral: "#fda4af",
+        blush: "#fde68a",
       },
     },
     font: {
