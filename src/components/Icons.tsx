@@ -99,19 +99,3 @@ export const EyeOffIcon: Component<IconProps> = (props) => (
     <path d="M9.9 10a3 3 0 0 0 4.1 4.2" />
   </svg>
 );
-
-export const ShieldIcon: Component<IconProps> = (props) => (
-  <svg
-    class={props.class}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="1.8"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    aria-hidden="true"
-  >
-    <path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6L12 3Z" />
-    <path d="m8.8 11.8 2.2 2.2 4.2-4.4" />
-  </svg>
-);

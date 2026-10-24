@@ -17,6 +17,7 @@ export default defineConfig({
         700: "#151a28",
       },
       mist: {
+        500: "#5f687c",
         400: "#7d869c",
         300: "#9aa3b8",
         200: "#c5cbda",
