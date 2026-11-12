@@ -6,9 +6,6 @@
   --color-ink: #1c1c1a;
   --color-muted: #6b6b66;
   --color-faint: #a8a8a2;
-  --color-hover: #efefec;
-  --color-danger: #dc2626;
-  --color-success: #15803d;
   --color-selection-bg: rgba(28, 28, 26, 0.85);
   --color-selection-fg: #f4f4f2;
 }
@@ -19,9 +16,6 @@
     --color-ink: #ececea;
     --color-muted: #9c9c94;
     --color-faint: #6b6b64;
-    --color-hover: #2c2c28;
-    --color-danger: #f87171;
-    --color-success: #4ade80;
     --color-selection-bg: rgba(236, 236, 234, 0.85);
     --color-selection-fg: #151513;
   }
@@ -49,107 +43,6 @@ body {
   color: var(--color-selection-fg);
 }
 
-/* ---------- background ---------- */
-
-.bg-scene {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(90px);
-  will-change: transform;
-}
-
-.orb-a {
-  top: -20%;
-  left: 8%;
-  width: 34rem;
-  height: 34rem;
-  background: radial-gradient(circle, rgba(249, 115, 22, 0.14), transparent 65%);
-  animation: drift-a 22s ease-in-out infinite alternate;
-}
-
-.orb-b {
-  right: 4%;
-  bottom: -24%;
-  width: 30rem;
-  height: 30rem;
-  background: radial-gradient(circle, rgba(120, 113, 108, 0.16), transparent 65%);
-  animation: drift-b 28s ease-in-out infinite alternate;
-}
-
-@keyframes drift-a {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(5rem, 4rem, 0) scale(1.1);
-  }
-}
-
-@keyframes drift-b {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(-4rem, -3rem, 0) scale(1.12);
-  }
-}
-
-/* ---------- buttons ---------- */
-
-.btn {
-  display: inline-flex;
-  height: 3rem;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  border-radius: 0.75rem;
-  padding: 0 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease,
-    transform 0.1s ease;
-}
-
-.btn:active {
-  transform: scale(0.97);
-}
-
-.btn-primary {
-  color: var(--color-bg);
-  background: var(--color-ink);
-}
-
-.btn-primary:hover {
-  opacity: 0.85;
-}
-
-.btn-primary.is-copied {
-  background: var(--color-success);
-  color: #fff;
-}
-
-.btn-secondary {
-  border: 1px solid color-mix(in oklab, var(--color-ink) 16%, transparent);
-  background: transparent;
-  color: var(--color-ink);
-}
-
-.btn-secondary:hover {
-  background: var(--color-hover);
-}
-
 /* ---------- password ---------- */
 
 .pw-row {
@@ -165,7 +58,6 @@ body {
   cursor: pointer;
   user-select: all;
   outline: none;
-  transition: color 0.25s ease;
 }
 
 .pw-char {
@@ -174,20 +66,12 @@ body {
   text-align: center;
 }
 
-.pw-row.is-copied {
-  color: var(--color-success);
-}
-
 .pw-char.pw-in {
   animation: char-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .pw-char.pw-pop {
   animation: char-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.turn {
-  animation: icon-turn 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes char-in {
@@ -219,16 +103,6 @@ body {
   }
 }
 
-@keyframes icon-turn {
-  from {
-    transform: rotate(-170deg) scale(0.85);
-  }
-  to {
-    transform: rotate(0) scale(1);
-  }
-}
-
-button:focus-visible,
 .pw-row:focus-visible {
   outline: 2px solid var(--color-ink);
   outline-offset: 4px;
@@ -236,17 +110,8 @@ button:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orb {
-    animation: none !important;
-  }
-
   .pw-char.pw-in,
-  .pw-char.pw-pop,
-  .turn {
+  .pw-char.pw-pop {
     animation: none !important;
-  }
-
-  .btn {
-    transition: none;
   }
 }

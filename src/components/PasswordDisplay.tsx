@@ -3,7 +3,6 @@ import { clearAnimations, prefersReducedMotion, replayAnimation } from "../lib/m
 
 interface PasswordDisplayProps {
   value: string;
-  copied: boolean;
   copyNonce: number;
   onCopy: () => void;
 }
@@ -38,11 +37,10 @@ export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
   return (
     <div
       class="pw-row font-code"
-      classList={{ "is-copied": props.copied }}
       role="button"
       tabindex="0"
-      aria-label="Copy password to clipboard"
-      title="Click to copy"
+      aria-label="Generate a new password and copy it"
+      title="Click to generate & copy"
       onClick={() => props.onCopy()}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
