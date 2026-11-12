@@ -1,38 +1,58 @@
-import { createEffect, Index, on, type Component } from "solid-js";
-import { clearAnimations, prefersReducedMotion, replayAnimation } from "../lib/motion";
+import { createEffect, on, onCleanup, type Component } from "solid-js";
+import { prefersReducedMotion } from "../lib/motion";
 
 interface PasswordDisplayProps {
   value: string;
-  copyNonce: number;
   onCopy: () => void;
 }
+
+const GLYPHS = "!<>-_\\/[]{}=+*^?#$%&";
 
 export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
   const refs: (HTMLSpanElement | undefined)[] = [];
   const chars = () => Array.from(props.value);
+  let timers: ReturnType<typeof setInterval>[] = [];
 
   createEffect(
     on(
       () => props.value,
       (value) => {
-        if (!value) return;
-        if (prefersReducedMotion()) {
-          clearAnimations(refs);
+        timers.forEach(clearInterval);
+        timers = [];
+        const elements = Array.from(refs);
+        if (!value || prefersReducedMotion()) {
+          elements.forEach((el, i) => {
+            if (el) el.textContent = value[i] ?? "";
+          });
           return;
         }
-        requestAnimationFrame(() => replayAnimation(refs, "pw-in", 22, 380));
+        elements.forEach((el, i) => {
+          if (!el) return;
+          const finalChar = value[i] ?? "";
+          const delay = i * 18;
+          const duration = 420 + i * 8;
+          const start = performance.now() + delay;
+          const timer = setInterval(() => {
+            const elapsed = performance.now() - start;
+            if (elapsed < 0) return;
+            if (elapsed >= duration) {
+              el.textContent = finalChar;
+              clearInterval(timer);
+              return;
+            }
+            el.textContent =
+              Math.random() < 0.45
+                ? GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
+                : finalChar;
+          }, 34);
+          timers.push(timer);
+        });
       },
+      { defer: true },
     ),
   );
 
-  let seenNonce = 0;
-  createEffect(() => {
-    const nonce = props.copyNonce;
-    if (nonce === seenNonce) return;
-    seenNonce = nonce;
-    if (prefersReducedMotion()) return;
-    requestAnimationFrame(() => replayAnimation(refs, "pw-pop", 12, 200));
-  });
+  onCleanup(() => timers.forEach(clearInterval));
 
   return (
     <div
@@ -49,18 +69,14 @@ export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
         }
       }}
     >
-      <Index each={chars()}>
-        {(char, index) => (
-          <span
-            ref={(element) => {
-              refs[index] = element;
-            }}
-            class="pw-char"
-          >
-            {char()}
-          </span>
-        )}
-      </Index>
+      {chars().map((_, index) => (
+        <span
+          class="pw-char"
+          ref={(element) => {
+            refs[index] = element;
+          }}
+        />
+      ))}
     </div>
   );
 };

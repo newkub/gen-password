@@ -14,7 +14,6 @@ const OPTIONS = {
 
 const App: Component = () => {
   const [password, setPassword] = createSignal("");
-  const [copyNonce, setCopyNonce] = createSignal(0);
   const [notice, setNotice] = createSignal<string | null>(null);
 
   let noticeTimer: ReturnType<typeof setTimeout> | undefined;
@@ -29,7 +28,6 @@ const App: Component = () => {
     const next = generatePassword(OPTIONS);
     setPassword(next);
     const ok = await copyText(next);
-    setCopyNonce((nonce) => nonce + 1);
     navigator.vibrate?.(15);
     flash(ok ? "Copied to clipboard" : "Couldn't copy — press Ctrl+C");
   };
@@ -57,7 +55,6 @@ const App: Component = () => {
 
         <PasswordDisplay
           value={password()}
-          copyNonce={copyNonce()}
           onCopy={() => void regenerateAndCopy()}
         />
 
