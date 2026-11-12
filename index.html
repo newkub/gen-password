@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f4f4f2" />
+    <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#151513" media="(prefers-color-scheme: dark)" />
     <meta
       name="description"
       content="gen-password generates strong, cryptographically random passwords entirely in your browser."
@@ -14,6 +15,12 @@
       html {
         background: #f4f4f2;
         color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        html {
+          background: #151513;
+          color-scheme: dark;
+        }
       }
     </style>
   </head>

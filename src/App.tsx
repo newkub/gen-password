@@ -112,16 +112,16 @@ const App: Component = () => {
   const strength = () => strengthOf(options());
 
   return (
-    <div class="min-h-dvh bg-stone-100 text-stone-900">
+    <div class="min-h-dvh bg-[var(--color-bg)] text-[var(--color-ink)]">
       <main class="mx-auto flex min-h-dvh w-full max-w-xl flex-col justify-center px-4 py-10 sm:px-6">
         <header class="mb-5">
           <h1 class="text-lg font-semibold tracking-tight">gen-password</h1>
-          <p class="mt-0.5 text-sm text-stone-500">
+          <p class="mt-0.5 text-sm text-[var(--color-muted)]">
             Strong random passwords, generated locally in your browser.
           </p>
         </header>
 
-        <section class="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:p-5">
+        <section class="rounded-2xl border border-[var(--color-line)] bg-[var(--color-surface)] p-4 shadow-sm sm:p-5">
           <PasswordDisplay
             value={password()}
             hidden={hidden()}
@@ -129,7 +129,7 @@ const App: Component = () => {
             onCopy={copy}
           />
 
-          <div class="mt-3 flex items-center justify-between gap-3 text-xs text-stone-500">
+          <div class="mt-3 flex items-center justify-between gap-3 text-xs text-[var(--color-muted)]">
             <div class="flex items-center gap-2">
               <span class="strength-track" aria-hidden="true">
                 {([1, 2, 3, 4] as const).map((seg) => (
@@ -220,13 +220,13 @@ const App: Component = () => {
           </div>
 
           <Show when={error()}>
-            <p class="mt-3 text-center text-xs text-red-600" aria-live="polite">
+            <p class="mt-3 text-center text-xs text-[var(--color-danger)]" aria-live="polite">
               {error()}
             </p>
           </Show>
         </section>
 
-        <footer class="mt-4 text-center text-xs text-stone-400">
+        <footer class="mt-4 text-center text-xs text-[var(--color-faint)]">
           Click the password to copy · Ctrl+Enter to regenerate · nothing leaves your device
         </footer>
       </main>
