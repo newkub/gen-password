@@ -1,4 +1,4 @@
-import { createEffect, on, onCleanup, type Component } from "solid-js";
+import { createEffect, createSignal, Index, on, onCleanup, type Component } from "solid-js";
 import { prefersReducedMotion } from "../lib/motion";
 
 interface PasswordDisplayProps {
@@ -7,46 +7,44 @@ interface PasswordDisplayProps {
 }
 
 const GLYPHS = "!<>-_\\/[]{}=+*^?#$%&";
+const STEP_MS = 18;
+const HOLD_MS = 140;
+const TICK_MS = 40;
 
 export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
-  const refs: (HTMLSpanElement | undefined)[] = [];
-  const chars = () => Array.from(props.value);
-  let timers: ReturnType<typeof setInterval>[] = [];
+  const [display, setDisplay] = createSignal(props.value);
+  const timers = new Set<ReturnType<typeof setInterval>>();
 
   createEffect(
     on(
       () => props.value,
       (value) => {
         timers.forEach(clearInterval);
-        timers = [];
-        const elements = Array.from(refs);
+        timers.clear();
         if (!value || prefersReducedMotion()) {
-          elements.forEach((el, i) => {
-            if (el) el.textContent = value[i] ?? "";
-          });
+          setDisplay(value);
           return;
         }
-        elements.forEach((el, i) => {
-          if (!el) return;
-          const finalChar = value[i] ?? "";
-          const delay = i * 18;
-          const duration = 420 + i * 8;
-          const start = performance.now() + delay;
-          const timer = setInterval(() => {
-            const elapsed = performance.now() - start;
-            if (elapsed < 0) return;
-            if (elapsed >= duration) {
-              el.textContent = finalChar;
-              clearInterval(timer);
-              return;
-            }
-            el.textContent =
-              Math.random() < 0.45
-                ? GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
-                : finalChar;
-          }, 34);
-          timers.push(timer);
-        });
+        const start = performance.now();
+        const total = HOLD_MS + value.length * STEP_MS + 2 * TICK_MS;
+        const timer = setInterval(() => {
+          const elapsed = performance.now() - start;
+          if (elapsed >= total) {
+            setDisplay(value);
+            clearInterval(timer);
+            timers.delete(timer);
+            return;
+          }
+          let out = "";
+          for (let i = 0; i < value.length; i++) {
+            out +=
+              elapsed > i * STEP_MS + HOLD_MS
+                ? value[i]
+                : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          }
+          setDisplay(out);
+        }, TICK_MS);
+        timers.add(timer);
       },
       { defer: true },
     ),
@@ -69,14 +67,9 @@ export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
         }
       }}
     >
-      {chars().map((_, index) => (
-        <span
-          class="pw-char"
-          ref={(element) => {
-            refs[index] = element;
-          }}
-        />
-      ))}
+      <Index each={Array.from(display())}>
+        {(char) => <span class="pw-char">{char()}</span>}
+      </Index>
     </div>
   );
 };
