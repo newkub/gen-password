@@ -17,6 +17,7 @@
     "solid-js": "^1.9.17"
   },
   "devDependencies": {
+    "happy-dom": "^21.0.4",
     "typescript": "^7.0.2",
     "unocss": "^66.11.0",
     "vite": "^8.3.5",

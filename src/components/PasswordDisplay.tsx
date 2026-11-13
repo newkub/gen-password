@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Index, on, onCleanup, type Component } from "solid-js";
+import { createEffect, createSignal, Index, onCleanup, type Component } from "solid-js";
 import { prefersReducedMotion } from "../lib/motion";
 
 interface PasswordDisplayProps {
@@ -15,40 +15,35 @@ export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
   const [display, setDisplay] = createSignal(props.value);
   const timers = new Set<ReturnType<typeof setInterval>>();
 
-  createEffect(
-    on(
-      () => props.value,
-      (value) => {
-        timers.forEach(clearInterval);
-        timers.clear();
-        if (!value || prefersReducedMotion()) {
-          setDisplay(value);
-          return;
-        }
-        const start = performance.now();
-        const total = HOLD_MS + value.length * STEP_MS + 2 * TICK_MS;
-        const timer = setInterval(() => {
-          const elapsed = performance.now() - start;
-          if (elapsed >= total) {
-            setDisplay(value);
-            clearInterval(timer);
-            timers.delete(timer);
-            return;
-          }
-          let out = "";
-          for (let i = 0; i < value.length; i++) {
-            out +=
-              elapsed > i * STEP_MS + HOLD_MS
-                ? value[i]
-                : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-          }
-          setDisplay(out);
-        }, TICK_MS);
-        timers.add(timer);
-      },
-      { defer: true },
-    ),
-  );
+  createEffect(() => {
+    const value = props.value;
+    timers.forEach(clearInterval);
+    timers.clear();
+    if (!value || prefersReducedMotion()) {
+      setDisplay(value);
+      return;
+    }
+    const start = performance.now();
+    const total = HOLD_MS + value.length * STEP_MS + 2 * TICK_MS;
+    const timer = setInterval(() => {
+      const elapsed = performance.now() - start;
+      if (elapsed >= total) {
+        setDisplay(value);
+        clearInterval(timer);
+        timers.delete(timer);
+        return;
+      }
+      let out = "";
+      for (let i = 0; i < value.length; i++) {
+        out +=
+          elapsed > i * STEP_MS + HOLD_MS
+            ? value[i]
+            : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+      }
+      setDisplay(out);
+    }, TICK_MS);
+    timers.add(timer);
+  });
 
   onCleanup(() => timers.forEach(clearInterval));
 
