@@ -64,6 +64,32 @@ body {
   display: inline-block;
   min-width: 0.55em;
   text-align: center;
+  transition:
+    opacity 160ms ease,
+    color 160ms ease;
+}
+
+.pw-char.is-rolling {
+  opacity: 0.45;
+}
+
+.pw-char.is-settled {
+  opacity: 1;
+  animation: pw-pop 260ms ease-out both;
+}
+
+@keyframes pw-pop {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .pw-row:focus-visible {
@@ -73,7 +99,8 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pw-row {
-    cursor: default;
+  .pw-char {
+    transition: none;
+    animation: none;
   }
 }

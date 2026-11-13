@@ -1,4 +1,4 @@
-import { createEffect, createSignal, Index, onCleanup, type Component } from "solid-js";
+import { createEffect, createSignal, For, onCleanup, type Component } from "solid-js";
 import { prefersReducedMotion } from "../lib/motion";
 
 interface PasswordDisplayProps {
@@ -6,13 +6,22 @@ interface PasswordDisplayProps {
   onCopy: () => void;
 }
 
-const GLYPHS = "!<>-_\\/[]{}=+*^?#$%&";
-const STEP_MS = 18;
-const HOLD_MS = 140;
-const TICK_MS = 40;
+const REEL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const TICK_MS = 50;
+const HOLD_MS = 220;
+const STAGGER_MS = 55;
+const JITTER_MS = 140;
+
+interface Cell {
+  char: string;
+  settled: boolean;
+}
+
+const settledCells = (value: string): Cell[] =>
+  Array.from(value, (char) => ({ char, settled: true }));
 
 export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
-  const [display, setDisplay] = createSignal(props.value);
+  const [cells, setCells] = createSignal<Cell[]>(settledCells(props.value));
   const timers = new Set<ReturnType<typeof setInterval>>();
 
   createEffect(() => {
@@ -20,27 +29,38 @@ export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
     timers.forEach(clearInterval);
     timers.clear();
     if (!value || prefersReducedMotion()) {
-      setDisplay(value);
+      setCells(settledCells(value));
       return;
     }
+
+    // Lottery draw: each position locks in at its own random moment.
+    const order = Array.from({ length: value.length }, (_, i) => i);
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j]!, order[i]!];
+    }
+    const settleAt = new Array<number>(value.length).fill(0);
+    order.forEach((charIndex, position) => {
+      settleAt[charIndex] = HOLD_MS + position * STAGGER_MS + Math.random() * JITTER_MS;
+    });
+    const total = Math.max(...settleAt) + TICK_MS;
+
     const start = performance.now();
-    const total = HOLD_MS + value.length * STEP_MS + 2 * TICK_MS;
     const timer = setInterval(() => {
       const elapsed = performance.now() - start;
       if (elapsed >= total) {
-        setDisplay(value);
+        setCells(settledCells(value));
         clearInterval(timer);
         timers.delete(timer);
         return;
       }
-      let out = "";
-      for (let i = 0; i < value.length; i++) {
-        out +=
-          elapsed > i * STEP_MS + HOLD_MS
-            ? value[i]
-            : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-      }
-      setDisplay(out);
+      setCells(
+        value.split("").map((char, i) =>
+          elapsed >= settleAt[i]!
+            ? { char, settled: true }
+            : { char: REEL[Math.floor(Math.random() * REEL.length)]!, settled: false },
+        ),
+      );
     }, TICK_MS);
     timers.add(timer);
   });
@@ -62,9 +82,13 @@ export const PasswordDisplay: Component<PasswordDisplayProps> = (props) => {
         }
       }}
     >
-      <Index each={Array.from(display())}>
-        {(char) => <span class="pw-char">{char()}</span>}
-      </Index>
+      <For each={cells()}>
+        {(cell) => (
+          <span class={cell.settled ? "pw-char is-settled" : "pw-char is-rolling"}>
+            {cell.char}
+          </span>
+        )}
+      </For>
     </div>
   );
 };
